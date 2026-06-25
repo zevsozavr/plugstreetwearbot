@@ -13,21 +13,27 @@ export function Header({ title, showBack, right, onBack }: Props) {
   return (
     <header style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-      padding: '12px var(--pad)', height: 64, position: 'sticky', top: 0, zIndex: 60,
-      background: 'var(--glass-bg)', backdropFilter: 'blur(24px)',
-      borderBottom: '1px solid var(--glass-border)',
+      padding: '0 20px', height: 64, position: 'sticky', top: 0, zIndex: 60,
+      background: 'rgba(15,21,36,0.4)', backdropFilter: 'blur(24px)',
+      borderBottom: '1px solid rgba(125,211,252,0.1)',
     }}>
       <div style={{ width: 40, display: 'flex', alignItems: 'center' }}>
         {showBack && (
-          <button onClick={onBack || (() => navigate(-1))} style={{ color: 'var(--primary)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 4 }}>
+          <button onClick={onBack || (() => navigate(-1))} style={{
+            color: 'var(--primary)', display: 'flex', alignItems: 'center',
+            justifyContent: 'center', padding: 4,
+          }} className="active:scale-90">
             <span className="material-symbols-outlined" style={{ fontSize: 24 }}>arrow_back</span>
           </button>
         )}
       </div>
       {title ? (
-        <h1 style={{ font: 'var(--font-headline)', color: 'var(--primary)', letterSpacing: 'var(--ls-headline)' }}>{title}</h1>
+        <h1 style={{ font: 'var(--font-headline)', color: 'var(--primary)' }}>{title}</h1>
       ) : (
-        <span style={{ font: 'var(--font-display)', color: 'var(--primary)', letterSpacing: 'var(--ls-display)', fontSize: 22 }}>TRIPPIE</span>
+        <span style={{
+          font: '800 22px/1 Inter, sans-serif', letterSpacing: '-0.03em',
+          color: 'var(--primary)',
+        }}>TRIPPIE</span>
       )}
       <div style={{ width: 40, display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
         {right}

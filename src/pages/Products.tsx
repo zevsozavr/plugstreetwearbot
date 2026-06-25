@@ -37,38 +37,23 @@ export function Products() {
   const currentSortLabel = sortOptions.find((o) => o.key === sort)?.label || t('products.sort.default');
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh', background: 'var(--bg)' }}>
-      <nav style={{
-        position: 'fixed', top: 0, width: '100%', zIndex: 50,
-        background: 'var(--glass-bg)', backdropFilter: 'blur(12px)',
-        boxShadow: '0 1px 0 rgba(224,232,240,0.05)',
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 96, overflowX: 'hidden' }}>
+      <header style={{
+        position: 'fixed', top: 0, width: '100%', zIndex: 60,
+        background: 'rgba(15,21,36,0.4)', backdropFilter: 'blur(24px)',
+        borderBottom: '1px solid rgba(125,211,252,0.1)',
+        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        padding: '0 20px', height: 64,
       }}>
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-          padding: '0 var(--pad)', height: 64, maxWidth: 'var(--container-max)', margin: '0 auto',
-        }}>
-          <button onClick={() => navigate(-1)} style={{ color: 'var(--on-surface)' }}>
-            <span className="material-symbols-outlined">menu</span>
-          </button>
-          <span style={{ font: 'var(--font-headline)', letterSpacing: '0.1em', color: 'var(--on-surface)', fontWeight: 700 }}>TRIPPIE</span>
-          <button onClick={() => navigate('/cart')} style={{ color: 'var(--on-surface)' }}>
-            <span className="material-symbols-outlined">shopping_bag</span>
-          </button>
-        </div>
-      </nav>
+        <button onClick={() => navigate(-1)} style={{ color: 'var(--primary)' }} className="active:scale-90">
+          <span className="material-symbols-outlined" style={{ fontSize: 28 }}>arrow_back</span>
+        </button>
+        <h1 style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--primary)' }}>{t('products.title')}</h1>
+        <div style={{ width: 40 }} />
+      </header>
 
-      <main style={{ paddingTop: 96, paddingBottom: 128, maxWidth: 'var(--container-max)', margin: '0 auto', paddingLeft: 'var(--pad)', paddingRight: 'var(--pad)' }}>
-        <header style={{ marginBottom: 48 }}>
-          <h1 style={{
-            font: 'var(--font-display)',
-            color: 'var(--on-surface)', marginBottom: 16,
-          }}>{t('products.title')}</h1>
-          <p style={{ font: 'var(--font-body-sm)', fontSize: 18, lineHeight: '28px', color: 'var(--on-surface-variant)', maxWidth: 576, opacity: 0.8 }}>
-            Explore our latest collection of premium streetwear, blending urban architectural lines with soft tactile comfort.
-          </p>
-        </header>
-
-        <div style={{ display: 'flex', gap: 12, overflow: 'auto', marginBottom: 40, scrollbarWidth: 'none' }}>
+      <main style={{ paddingTop: 80, paddingLeft: 20, paddingRight: 20 }}>
+        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', marginBottom: 24, scrollbarWidth: 'none', msOverflowStyle: 'none', paddingBottom: 4 }}>
           {categories.map((cat) => {
             const active = activeCategory === cat.name || (!activeCategory && cat.name === 'All');
             return (
@@ -77,11 +62,13 @@ export function Products() {
                 setSearchParams({ category: cat.name });
               }}
                 style={{
-                  flexShrink: 0, padding: '8px 24px', borderRadius: 'var(--radius-full)',
-                  background: active ? 'var(--primary)' : 'var(--surface-container)',
+                  flexShrink: 0, padding: '10px 24px', borderRadius: 9999,
+                  background: active ? 'var(--primary)' : 'rgba(15,21,36,0.6)',
                   color: active ? 'var(--on-primary)' : 'var(--on-surface-variant)',
-                  font: 'var(--font-label)',
-                  border: active ? 'none' : '1px solid var(--glass-border)',
+                  fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap',
+                  border: active ? 'none' : '1px solid rgba(125,211,252,0.1)',
+                  backdropFilter: active ? 'none' : 'blur(16px)',
+                  boxShadow: active ? '0 0 15px rgba(123,209,250,0.3)' : 'none',
                 }}>
                 {t('categories.' + cat.name)}
               </button>
@@ -89,26 +76,26 @@ export function Products() {
           })}
         </div>
 
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 24 }}>
-          <span style={{ font: 'var(--font-body)', color: 'var(--on-surface-variant)' }}>{filtered.length} {t('products.count')}</span>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
+          <span style={{ fontSize: 13, color: 'var(--on-surface-variant)' }}>{filtered.length} {t('products.count')}</span>
           <div style={{ position: 'relative' }}>
             <button onClick={() => setShowSort(!showSort)}
-              style={{ display: 'flex', alignItems: 'center', gap: 4, font: 'var(--font-body)', color: 'var(--on-surface-variant)', background: 'none', padding: '4px 8px' }}>
+              style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, color: 'var(--on-surface-variant)', background: 'none', padding: '4px 8px' }}>
               <span className="material-symbols-outlined" style={{ fontSize: 16 }}>sort</span>
               {currentSortLabel}
             </button>
             {showSort && (
               <div style={{
                 position: 'absolute', top: '100%', right: 0, zIndex: 50,
-                background: 'var(--glass-bg)', backdropFilter: 'blur(12px)',
-                border: '1px solid var(--glass-border)', borderRadius: 'var(--rounded-xl)',
+                background: 'rgba(15,21,36,0.75)', backdropFilter: 'blur(24px)',
+                border: '1px solid rgba(125,211,252,0.15)', borderRadius: 12,
                 padding: 8, minWidth: 200,
               }}>
                 {sortOptions.map((opt) => (
                   <button key={opt.key} onClick={() => { setSort(opt.key); setShowSort(false); }}
                     style={{
                       display: 'block', width: '100%', textAlign: 'left', padding: '10px 12px',
-                      borderRadius: 'var(--rounded-lg)',                 background: sort === opt.key ? 'rgba(125,211,252,0.08)' : 'transparent',
+                      borderRadius: 12, background: sort === opt.key ? 'rgba(125,211,252,0.08)' : 'transparent',
                       font: 'var(--font-body)', color: sort === opt.key ? 'var(--primary)' : 'var(--on-surface)',
                       border: 'none', fontSize: 14,
                     }}>
@@ -120,24 +107,32 @@ export function Products() {
           </div>
         </div>
 
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 'var(--gutter)' }}>
-          {filtered.map((p) => (
-            <article key={p.id} onClick={() => navigate(`/product/${p.id}`)}
-              style={{ cursor: 'pointer', borderRadius: 'var(--rounded-xl)', overflow: 'hidden', background: 'var(--glass-bg)', backdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)' }}>
-              <div style={{ position: 'relative', aspectRatio: '3/4', overflow: 'hidden', background: 'var(--surface-low)' }}>
+        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          {filtered.map((p, i) => (
+            <div key={p.id} onClick={() => navigate(`/product/${p.id}`)}
+              style={{ cursor: 'pointer', marginTop: i % 2 === 1 ? 24 : 0 }}>
+              <div style={{
+                position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: 12, overflow: 'hidden',
+                background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
+                border: '1px solid rgba(125,211,252,0.08)',
+              }}>
                 <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{ position: 'absolute', top: 16, right: 16, background: 'var(--glass-bg)', backdropFilter: 'blur(12px)', padding: 8, borderRadius: '50%', color: 'var(--on-surface)' }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 20 }}>favorite</span>
+                <div style={{
+                  position: 'absolute', top: 12, right: 12,
+                  background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(125,211,252,0.1)', width: 32, height: 32,
+                  borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: 'rgba(255,255,255,0.8)',
+                }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>favorite</span>
                 </div>
               </div>
-              <div style={{ padding: 16 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 4 }}>
-                  <h3 style={{ font: 'var(--font-body)', color: 'var(--on-surface)', fontWeight: 500 }}>{p.name}</h3>
-                  <span style={{ font: 'var(--font-label)', color: 'var(--on-surface-variant)' }}>{p.price.toLocaleString()}₴</span>
-                </div>
-                <p style={{ font: 'var(--font-body-sm)', color: 'var(--on-surface-variant)', opacity: 0.7 }}>{t('categories.' + p.category)}</p>
+              <div style={{ padding: '8px 4px' }}>
+                <p style={{ fontSize: 11, fontWeight: 500, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('categories.' + p.category)}</p>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--on-surface)', marginTop: 2 }}>{p.name}</p>
+                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)', marginTop: 2 }}>{p.price.toLocaleString()}₴</p>
               </div>
-            </article>
+            </div>
           ))}
         </section>
       </main>
