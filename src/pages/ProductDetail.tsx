@@ -47,7 +47,6 @@ export function ProductDetail() {
 
   const images = [product.image, ...product.colors.map((c) => c.image || product.image).slice(0, 2)]
   const fav = isFavorite(product.id)
-  const related = products.filter((p) => p.id !== product.id).slice(0, 3)
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 140 }}>
@@ -287,105 +286,12 @@ export function ProductDetail() {
           </div>
         </section>
 
-        {/* Accordions */}
+        {/* Description */}
         <section style={{ padding: '0 24px', marginTop: 16 }}>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <details open style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, overflow: 'hidden' }}>
-              <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, cursor: 'pointer', listStyle: 'none', fontWeight: 600, fontSize: 14, color: '#e0e8f0' }}>
-                {t('product.description')}
-                <span className="material-symbols-outlined" style={{ transition: 'transform 0.2s', color: '#a0b4c4' }}>expand_more</span>
-              </summary>
-              <div style={{ padding: '0 16px 16px', fontSize: 14, color: '#a0b4c4', lineHeight: 1.6 }}>
-                {product.description}
-              </div>
-            </details>
-            <details style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, overflow: 'hidden' }}>
-              <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, cursor: 'pointer', listStyle: 'none', fontWeight: 600, fontSize: 14, color: '#e0e8f0' }}>
-                {t('product.materials')}
-                <span className="material-symbols-outlined" style={{ transition: 'transform 0.2s', color: '#a0b4c4' }}>expand_more</span>
-              </summary>
-              <div style={{ padding: '0 16px 16px', fontSize: 14, color: '#a0b4c4' }}>
-                Shell: 100% Recycled Technical Fabric. Lining: Premium Satin. Hardware: Antiqued Silver-toned Alloy.
-              </div>
-            </details>
-            <details style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, overflow: 'hidden' }}>
-              <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, cursor: 'pointer', listStyle: 'none', fontWeight: 600, fontSize: 14, color: '#e0e8f0' }}>
-                {t('product.care')}
-                <span className="material-symbols-outlined" style={{ transition: 'transform 0.2s', color: '#a0b4c4' }}>expand_more</span>
-              </summary>
-              <div style={{ padding: '0 16px 16px', fontSize: 14, color: '#a0b4c4' }}>
-                Professional clean only. Do not bleach. Store in a cool, dry place.
-              </div>
-            </details>
-          </div>
-        </section>
-
-        {/* Related Products */}
-        <section style={{ marginTop: 48, marginBottom: 80 }}>
-          <div style={{ padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24 }}>
-            <div>
-              <h2 style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: '#e0e8f0' }}>{t('product.ecosystem')}</h2>
-              <p style={{ fontSize: 12, color: '#c8a0f0', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{t('product.complete')}</p>
-            </div>
-            <button onClick={() => navigate('/products')} style={{ fontSize: 14, color: '#7dd3fc', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
-              {t('product.see.all')}
-            </button>
-          </div>
-          <div style={{ display: 'flex', overflowX: 'auto', gap: 16, padding: '0 24px' }} className="hide-scrollbar">
-            {related.map((p) => (
-              <div key={p.id} className="min-w-[200px] group" onClick={() => navigate(`/product/${p.id}`)} style={{ cursor: 'pointer' }}>
-                <div
-                  style={{
-                    aspectRatio: '1/1',
-                    borderRadius: 24,
-                    overflow: 'hidden',
-                    background: 'rgba(15, 21, 36, 0.6)',
-                    backdropFilter: 'blur(16px)',
-                    border: '1px solid rgba(125, 211, 252, 0.1)',
-                    marginBottom: 12,
-                    position: 'relative',
-                  }}
-                >
-                  <img
-                    src={p.image}
-                    alt={p.name}
-                    style={{
-                      width: '100%',
-                      height: '100%',
-                      objectFit: 'cover',
-                      transition: 'transform 0.5s',
-                    }}
-                    className="group-hover:scale-110"
-                  />
-                  <button
-                    onClick={(e) => { e.stopPropagation(); toggleFavorite(p) }}
-                    style={{
-                      position: 'absolute',
-                      top: 8,
-                      right: 8,
-                      width: 32,
-                      height: 32,
-                      borderRadius: '50%',
-                      background: 'rgba(26, 36, 56, 0.75)',
-                      backdropFilter: 'blur(24px)',
-                      border: '1px solid rgba(125, 211, 252, 0.15)',
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      cursor: 'pointer',
-                      color: isFavorite(p.id) ? '#ff6b6b' : '#a0b4c4',
-                      padding: 0,
-                    }}
-                  >
-                    <span className="material-symbols-outlined" style={{ fontSize: 14, fontVariationSettings: isFavorite(p.id) ? "'FILL' 1" : "'FILL' 0" }}>
-                      favorite
-                    </span>
-                  </button>
-                </div>
-                <h4 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</h4>
-                <p style={{ fontSize: 12, color: '#7dd3fc', fontWeight: 700, marginTop: 4 }}>₴{p.price.toLocaleString()}</p>
-              </div>
-            ))}
+          <div style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, padding: 16 }}>
+            <p style={{ fontSize: 14, color: '#a0b4c4', lineHeight: 1.6 }}>
+              {product.description}
+            </p>
           </div>
         </section>
       </main>

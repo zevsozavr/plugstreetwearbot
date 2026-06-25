@@ -1,13 +1,30 @@
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLang } from '../context/LangContext'
 
 import { BottomBar } from '../components/BottomBar'
 
+interface Order {
+  id: string
+  items: { name: string; quantity: number; price: number }[]
+  total: number
+  date: string
+}
+
 export function Settings() {
   const navigate = useNavigate()
   const { isAdmin } = useAuth()
   const { lang, setLang, t } = useLang()
+  const [orders, setOrders] = useState<Order[]>([])
+  const [showOrders, setShowOrders] = useState(false)
+
+  useEffect(() => {
+    try {
+      const raw = localStorage.getItem('plugstreet_orders')
+      if (raw) setOrders(JSON.parse(raw))
+    } catch {}
+  }, [])
 
   const sectionStyle: React.CSSProperties = {
     background: 'rgba(15, 21, 36, 0.6)',
@@ -92,6 +109,54 @@ export function Settings() {
         </section>
 
 
+
+        {/* Order History */}
+        <section style={{ marginBottom: 24 }}>
+          <h3 style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: '#c8a0f0', opacity: 0.7, padding: '0 4px', marginBottom: 12 }}>
+            {t('settings.history')}
+          </h3>
+          <div style={sectionStyle}>
+            <div style={{ ...rowStyle }} onClick={() => setShowOrders(!showOrders)}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
+                <div style={{ width: 40, height: 40, display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: 24, background: 'rgba(125, 211, 252, 0.1)', color: '#7dd3fc' }}>
+                  <span className="material-symbols-outlined">receipt_long</span>
+                </div>
+                <div>
+                  <span style={{ fontWeight: 500, color: '#e0e8f0', display: 'block' }}>{t('settings.history')}</span>
+                  <span style={{ fontSize: 12, color: '#a0b4c4' }}>{orders.length} {t('settings.orders')}</span>
+                </div>
+              </div>
+              <span className="material-symbols-outlined" style={{ color: '#a0b4c4', transform: showOrders ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>expand_more</span>
+            </div>
+            {showOrders && orders.length > 0 && (
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: 16 }}>
+                {[...orders].reverse().map((o) => (
+                  <div key={o.id} style={{ marginBottom: 16, background: 'rgba(255,255,255,0.03)', borderRadius: 12, padding: 12 }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
+                      <span style={{ fontSize: 12, color: '#7dd3fc', fontWeight: 600 }}>#{o.id}</span>
+                      <span style={{ fontSize: 11, color: '#a0b4c4' }}>{new Date(o.date).toLocaleDateString()}</span>
+                    </div>
+                    {o.items.map((item) => (
+                      <div key={item.name} style={{ display: 'flex', justifyContent: 'space-between', fontSize: 13, marginBottom: 4 }}>
+                        <span style={{ color: '#a0b4c4' }}>{item.name} x{item.quantity}</span>
+                        <span style={{ color: '#e0e8f0' }}>₴{(item.price * item.quantity).toLocaleString()}</span>
+                      </div>
+                    ))}
+                    <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.05)', marginTop: 8, paddingTop: 8 }}>
+                      <span style={{ fontSize: 13, fontWeight: 600, color: '#e0e8f0' }}>{t('cart.total')}</span>
+                      <span style={{ fontSize: 13, fontWeight: 700, color: '#7dd3fc' }}>₴{o.total.toLocaleString()}</span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+            {showOrders && orders.length === 0 && (
+              <div style={{ borderTop: '1px solid rgba(255,255,255,0.05)', padding: 16, textAlign: 'center' }}>
+                <p style={{ fontSize: 13, color: '#a0b4c4' }}>{t('settings.no.orders')}</p>
+              </div>
+            )}
+          </div>
+        </section>
 
         {/* About */}
         <section style={{ paddingTop: 16, paddingBottom: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>

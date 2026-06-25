@@ -20,30 +20,43 @@ export function Checkout() {
     e.preventDefault()
     setSubmitting(true)
 
-    try {
-      const tg = window.Telegram?.WebApp
-      if (tg?.initDataUnsafe?.user?.id) {
-        const msg = [
-          `🛒 *Нове замовлення!*`,
-          `👤 *${name}*`,
-          `📞 ${phone}`,
-          `📍 ${address}`,
-          '',
-          ...items.map((i) => `• ${i.name} (${i.selectedSize}, ${i.selectedColor}) x${i.quantity} — ₴${(i.price * i.quantity).toLocaleString()}`),
-          '',
-          `💰 *Всього: ₴${total.toLocaleString()}*`,
-        ].join('\n')
+    const order = {
+      id: Date.now().toString(36).toUpperCase(),
+      items: [...items],
+      total,
+      date: new Date().toISOString(),
+      name,
+      phone,
+      address,
+    }
 
-        await fetch(`https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/sendMessage`, {
+    try {
+      const existing = JSON.parse(localStorage.getItem('plugstreet_orders') || '[]')
+      existing.push(order)
+      localStorage.setItem('plugstreet_orders', JSON.stringify(existing))
+    } catch {}
+
+    try {
+      const msg = [
+        `🛒 *Нове замовлення!*`,
+        `👤 *${name}*`,
+        `📞 ${phone}`,
+        `📍 ${address}`,
+        '',
+        ...items.map((i) => `• ${i.name} (${i.selectedSize}, ${i.selectedColor}) x${i.quantity} — ₴${(i.price * i.quantity).toLocaleString()}`),
+        '',
+        `💰 *Всього: ₴${total.toLocaleString()}*`,
+        `🆔 #${order.id}`,
+      ].join('\n')
+
+      const adminIds = [822479618, 1335203493]
+      await Promise.allSettled(adminIds.map((chat_id) =>
+        fetch(`https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/sendMessage`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            chat_id: 822479618,
-            text: msg,
-            parse_mode: 'Markdown',
-          }),
+          body: JSON.stringify({ chat_id, text: msg, parse_mode: 'Markdown' }),
         })
-      }
+      ))
     } catch {}
 
     clearCart()

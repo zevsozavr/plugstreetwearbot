@@ -1,6 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
 
-const ADMIN_ID = 822479618;
+const ADMIN_IDS = [822479618, 1335203493];
 
 interface AuthContextValue {
   userId: number | null;
@@ -12,7 +12,7 @@ const AuthContext = createContext<AuthContextValue>({ userId: null, isAdmin: fal
 export function AuthProvider({ children }: { children: ReactNode }) {
   const tg = window.Telegram?.WebApp;
   const userId = tg?.initDataUnsafe?.user?.id ?? null;
-  const isAdmin = userId === ADMIN_ID;
+  const isAdmin = userId !== null && ADMIN_IDS.includes(userId);
 
   return <AuthContext.Provider value={{ userId, isAdmin }}>{children}</AuthContext.Provider>;
 }

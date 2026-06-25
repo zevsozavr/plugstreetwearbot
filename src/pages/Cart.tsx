@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useLang } from '../context/LangContext'
@@ -8,13 +7,8 @@ export function Cart() {
   const navigate = useNavigate()
   const { items, removeItem, updateQuantity, totalPrice } = useCart()
   const { t } = useLang()
-  const [promo, setPromo] = useState('')
-  const [applied, setApplied] = useState(false)
-
-  const discount = applied ? 0.1 : 0
   const subtotal = totalPrice
-  const tax = 0
-  const total = subtotal * (1 - discount)
+  const total = subtotal
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 196 }}>
@@ -168,47 +162,6 @@ export function Cart() {
 
         {items.length > 0 && (
           <>
-            {/* Promo Code Input */}
-            <section style={{ marginTop: 32 }}>
-              <div style={{ position: 'relative' }}>
-                <input
-                  value={promo}
-                  onChange={(e) => setPromo(e.target.value)}
-                  placeholder={t('cart.promo')}
-                  style={{
-                    width: '100%',
-                    height: 56,
-                    background: 'rgba(255,255,255,0.05)',
-                    border: '1px solid rgba(255,255,255,0.1)',
-                    borderRadius: 24,
-                    padding: '0 16px',
-                    color: '#e0e8f0',
-                    fontSize: 14,
-                    outline: 'none',
-                  }}
-                />
-                <button
-                  onClick={() => setApplied(true)}
-                  style={{
-                    position: 'absolute',
-                    right: 8,
-                    top: 8,
-                    height: 40,
-                    padding: '0 24px',
-                    borderRadius: 16,
-                    border: '1px solid #7dd3fc',
-                    background: 'transparent',
-                    color: '#7dd3fc',
-                    fontSize: 14,
-                    fontWeight: 600,
-                    cursor: 'pointer',
-                  }}
-                >
-                  {t('cart.apply')}
-                </button>
-              </div>
-            </section>
-
             {/* Order Summary */}
             <section
               style={{
@@ -223,26 +176,16 @@ export function Cart() {
             >
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, fontSize: 14 }}>
                 <span style={{ color: '#a0b4c4' }}>{t('cart.subtotal')}</span>
-                <span style={{ color: '#e0e8f0', fontWeight: 500 }}>${subtotal.toFixed(2)}</span>
+                <span style={{ color: '#e0e8f0', fontWeight: 500 }}>₴{subtotal.toLocaleString()}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, fontSize: 14 }}>
                 <span style={{ color: '#a0b4c4' }}>{t('cart.shipping')}</span>
                 <span style={{ color: '#7dd3fc', fontWeight: 500 }}>{t('cart.shipping.free')}</span>
               </div>
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, fontSize: 14 }}>
-                <span style={{ color: '#a0b4c4' }}>{t('cart.tax')}</span>
-                <span style={{ color: '#e0e8f0', fontWeight: 500 }}>${tax.toFixed(2)}</span>
-              </div>
-              {applied && (
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12, fontSize: 14 }}>
-                  <span style={{ color: '#88b4cc' }}>{t('cart.discount')} (10%)</span>
-                  <span style={{ color: '#88b4cc', fontWeight: 500 }}>-${(subtotal * discount).toFixed(2)}</span>
-                </div>
-              )}
               <div style={{ height: 1, background: 'rgba(255,255,255,0.1)', width: '100%', marginTop: 8, marginBottom: 12 }} />
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <span style={{ fontSize: 18, fontWeight: 700, color: '#e0e8f0' }}>{t('cart.total')}</span>
-                <span style={{ fontSize: 18, fontWeight: 700, color: '#7dd3fc' }}>₴{total.toFixed(2)}</span>
+                <span style={{ fontSize: 18, fontWeight: 700, color: '#7dd3fc' }}>₴{total.toLocaleString()}</span>
               </div>
             </section>
           </>
@@ -273,7 +216,7 @@ export function Cart() {
           >
             <span>{t('cart.checkout')}</span>
             <span style={{ width: 6, height: 6, background: '#001f2e', borderRadius: '50%', display: 'inline-block' }} />
-            <span>₴{total.toFixed(2)}</span>
+            <span>₴{total.toLocaleString()}</span>
           </button>
         </div>
       )}
