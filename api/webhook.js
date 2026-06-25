@@ -1,8 +1,10 @@
-import crypto from 'crypto';
-
 const BOT_TOKEN = process.env.BOT_TOKEN || '8649366560:AAE_Resk8hYpJUFKaLguojKkgRyH54OQbyo';
 
 export default async function handler(req, res) {
+  if (req.method === 'GET') {
+    return res.status(200).json({ ok: true, message: 'Webhook active' });
+  }
+
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
   const { message } = req.body;
@@ -14,7 +16,7 @@ export default async function handler(req, res) {
   if (text.startsWith('/start')) {
     const webAppUrl = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : 'https://plug-streetwear.vercel.app';
+      : 'https://plugstreetwearbot.vercel.app';
 
     await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
       method: 'POST',

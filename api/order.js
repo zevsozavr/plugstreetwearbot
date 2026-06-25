@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
-const BOT_TOKEN = process.env.BOT_TOKEN || '8849846358:AAH1QyRQpjS2DEh868mlrbzRrbK-QgkwYtc';
-const NOTIFY_CHAT_ID = process.env.NOTIFY_CHAT_ID || '8849846358';
+const BOT_TOKEN = process.env.BOT_TOKEN || '8649366560:AAE_Resk8hYpJUFKaLguojKkgRyH54OQbyo';
+const NOTIFY_CHAT_ID = process.env.NOTIFY_CHAT_ID || '822479618';
 
 function validateTelegramData(initData) {
   try {
@@ -32,11 +32,11 @@ export default async function handler(req, res) {
   const user = JSON.parse(urlParams.get('user') || '{}');
 
   const itemsList = order.items
-    .map((i) => `• ${i.name} (${i.color}/${i.size}) × ${i.quantity} — $${i.price * i.quantity}`)
+    .map((i) => `• ${i.name} (${i.color}/${i.size}) × ${i.quantity} — ${i.price * i.quantity}₴`)
     .join('\n');
 
   const message = [
-    `🛍 *New Order — Certified Clo*`,
+    `🛍 *New Order — Trippie*`,
     ``,
     `*Name:* ${order.name}`,
     `*Phone:* ${order.phone}`,
@@ -46,7 +46,7 @@ export default async function handler(req, res) {
     `*Items:*`,
     itemsList,
     ``,
-    `*Total:* $${order.total}`,
+    `*Total:* ${order.total}₴`,
   ].join('\n');
 
   await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
