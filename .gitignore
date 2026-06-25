@@ -36,3 +36,6 @@ Thumbs.db
 .stitch-mcp/
 stitch-output/
 fetch-stitch.mjs
+
+.vercel
+.env*

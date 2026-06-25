@@ -1,6 +1,6 @@
 import crypto from 'crypto';
 
-const BOT_TOKEN = process.env.BOT_TOKEN || '8849846358:AAH1QyRQpjS2DEh868mlrbzRrbK-QgkwYtc';
+const BOT_TOKEN = process.env.BOT_TOKEN || '8649366560:AAE_Resk8hYpJUFKaLguojKkgRyH54OQbyo';
 
 export default async function handler(req, res) {
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
