@@ -1,0 +1,67 @@
+:root {
+  --bg: #131313;
+  --surface: #20201f;
+  --surface-low: #1a1a1a;
+  --surface-container: #20201f;
+  --surface-high: #2a2a29;
+  --surface-highest: #333332;
+  --on-surface: #e5e2e1;
+  --on-surface-variant: #cdc5bc;
+  --primary: #f3ebe3;
+  --primary-dim: #e0d5ca;
+  --primary-container: #483c31;
+  --on-primary: #1f1b16;
+  --on-primary-container: #f3ebe3;
+  --secondary: #c2c9b4;
+  --secondary-dim: #a4ad94;
+  --outline: #958e86;
+  --outline-variant: #49433d;
+  --error: #ffb4ab;
+  --error-container: #93000a;
+  --on-error: #690005;
+
+  --glass-bg: rgba(32,32,31,0.4);
+  --glass-border: rgba(255,255,255,0.08);
+  --glass-card-bg: rgba(32,32,31,0.6);
+  --glass-card-border: rgba(255,255,255,0.1);
+
+  --font-display: 700 32px/40px 'Hanken Grotesk', sans-serif;
+  --font-headline: 600 24px/32px 'Hanken Grotesk', sans-serif;
+  --font-headline-sm: 600 20px/28px 'Hanken Grotesk', sans-serif;
+  --font-body: 400 16px/24px 'Hanken Grotesk', sans-serif;
+  --font-body-sm: 400 14px/20px 'Hanken Grotesk', sans-serif;
+  --font-label: 500 12px/16px 'Hanken Grotesk', sans-serif;
+  --font-label-lg: 600 14px/16px 'Hanken Grotesk', sans-serif;
+
+  --ls-display: -0.02em;
+  --ls-headline: -0.01em;
+  --ls-label: 0.05em;
+
+  --rounded: 6px;
+  --rounded-md: 10px;
+  --rounded-lg: 14px;
+  --rounded-xl: 18px;
+  --rounded-2xl: 24px;
+  --radius-full: 9999px;
+
+  --space-unit: 4px;
+  --space-xs: 8px;
+  --space-sm: 12px;
+  --space-md: 16px;
+  --space-lg: 24px;
+  --space-xl: 40px;
+
+  --pad: 24px;
+  --gutter: 16px;
+  --safe-bottom: 32px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body{font:var(--font-body);color:var(--on-surface);background:var(--bg)}
+#root{min-height:100%;display:flex;flex-direction:column}
+img{max-width:100%;display:block}
+button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
+a{text-decoration:none;color:inherit}
+input{font:inherit;color:inherit;border:none;outline:none}
+::-webkit-scrollbar{width:0;height:0}
