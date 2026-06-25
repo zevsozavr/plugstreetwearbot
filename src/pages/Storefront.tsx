@@ -15,7 +15,7 @@ export function Storefront() {
 
   return (
     <div style={{ background: '#0a0e1a', minHeight: '100vh', paddingBottom: 128 }}>
-      <Header />
+      <Header left={<div style={{ width: 28 }} />} />
 
       <main style={{ paddingTop: 64 }}>
         {/* Hero Section */}
@@ -53,7 +53,7 @@ export function Storefront() {
               {collection.enabled ? collection.title : 'WINTER COLLECTION'}
             </h2>
             <p style={{ color: '#a0b4c4', fontSize: 18, marginBottom: 32, maxWidth: 448 }}>
-              {collection.enabled ? collection.subtitle : 'Ethereal warmth engineered for the sub-zero elite.'}
+              {collection.enabled ? collection.subtitle : 'Ethereal warmth engineered for the sub-zero.'}
             </p>
             <button
               onClick={() => navigate('/products')}

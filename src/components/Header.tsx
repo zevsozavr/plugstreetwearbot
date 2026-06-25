@@ -48,7 +48,7 @@ export function Header({ left, center, right, title, showBack, onBack }: HeaderP
       {center || (title ? (
         <h1 style={{ fontFamily: 'Inter', fontSize: 18, fontWeight: 600, color: '#e0e8f0' }}>{title}</h1>
       ) : (
-        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>ELITE</h1>
+        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>TRIPPIE</h1>
       ))}
       {right || (
         <button style={{ color: '#7dd3fc', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>

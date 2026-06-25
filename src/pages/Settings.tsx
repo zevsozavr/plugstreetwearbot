@@ -8,7 +8,7 @@ import { BottomBar } from '../components/BottomBar'
 export function Settings() {
   const navigate = useNavigate()
   const { isAdmin } = useAuth()
-  const { lang } = useLang()
+  const { lang, setLang } = useLang()
   const [darkMode, setDarkMode] = useState(true)
 
   const sectionStyle: React.CSSProperties = {
@@ -52,62 +52,12 @@ export function Settings() {
           height: 64,
         }}
       >
-        <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }} onClick={() => navigate(-1)}>arrow_back</span>
-        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>ELITE</h1>
+        <div style={{ width: 24 }} />
+        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>TRIPPIE</h1>
         <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }} onClick={() => navigate('/cart')}>shopping_bag</span>
       </header>
 
       <main style={{ paddingTop: 96, paddingLeft: 24, paddingRight: 24 }}>
-        {/* Profile Section */}
-        <section style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginBottom: 32 }}>
-          <div style={{ position: 'relative' }}>
-            <div
-              style={{
-                width: 96,
-                height: 96,
-                borderRadius: '50%',
-                padding: 4,
-                background: 'linear-gradient(to top right, #7dd3fc, #c8a0f0)',
-              }}
-            >
-              <img
-                src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=200&q=80"
-                alt="Profile"
-                style={{
-                  width: '100%',
-                  height: '100%',
-                  borderRadius: '50%',
-                  objectFit: 'cover',
-                  border: '2px solid #0a0e1a',
-                }}
-              />
-            </div>
-            <button
-              style={{
-                position: 'absolute',
-                bottom: 0,
-                right: 0,
-                padding: 8,
-                background: 'rgba(15, 21, 36, 0.75)',
-                backdropFilter: 'blur(24px)',
-                WebkitBackdropFilter: 'blur(24px)',
-                borderRadius: '50%',
-                color: '#7dd3fc',
-                border: '1px solid rgba(125, 211, 252, 0.2)',
-                cursor: 'pointer',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-            >
-              <span className="material-symbols-outlined" style={{ fontSize: 16 }}>edit</span>
-            </button>
-          </div>
-          <div style={{ marginTop: 16, textAlign: 'center' }}>
-            <h2 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: '#e0e8f0' }}>Julian Vane</h2>
-            <p style={{ color: '#a0b4c4', fontSize: 14, fontWeight: 500 }}>julian.vane@elite.tech</p>
-          </div>
-        </section>
 
 
 
@@ -131,34 +81,11 @@ export function Settings() {
                     color: '#c8a0f0',
                   }}
                 >
-                  <span className="material-symbols-outlined">currency_exchange</span>
-                </div>
-                <span style={{ fontWeight: 500, color: '#e0e8f0' }}>Currency</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#7dd3fc' }}>
-                <span style={{ fontSize: 14, fontWeight: 700 }}>USD</span>
-                <span className="material-symbols-outlined" style={{ fontSize: 16 }}>expand_more</span>
-              </div>
-            </div>
-            <div style={{ ...rowStyle, ...rowBorder }}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 24,
-                    background: 'rgba(200, 160, 240, 0.1)',
-                    color: '#c8a0f0',
-                  }}
-                >
                   <span className="material-symbols-outlined">language</span>
                 </div>
                 <span style={{ fontWeight: 500, color: '#e0e8f0' }}>Language</span>
               </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#7dd3fc' }}>
+              <div onClick={() => setLang(lang === 'UA' ? 'RU' : 'UA')} style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#7dd3fc' }}>
                 <span style={{ fontSize: 14, fontWeight: 700 }}>{lang === 'UA' ? 'Українська' : 'Русский'}</span>
                 <span className="material-symbols-outlined" style={{ fontSize: 16 }}>expand_more</span>
               </div>
@@ -221,25 +148,6 @@ export function Settings() {
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#a0b4c4' }}>
             Version 4.2.0-GLACIER
           </p>
-          <button
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              padding: '12px 40px',
-              borderRadius: 9999,
-              border: '1px solid rgba(255, 107, 107, 0.3)',
-              background: 'rgba(255, 107, 107, 0.05)',
-              color: '#ff6b6b',
-              fontWeight: 700,
-              letterSpacing: '-0.02em',
-              cursor: 'pointer',
-              fontSize: 14,
-            }}
-          >
-            <span className="material-symbols-outlined" style={{ fontSize: 18 }}>logout</span>
-            Logout
-          </button>
           {isAdmin && (
             <button
               onClick={() => navigate('/admin')}
