@@ -1,16 +1,15 @@
-interface Props {
-  name: string;
-  style?: React.CSSProperties;
-  filled?: boolean;
+import type { CSSProperties } from 'react'
+
+interface IconProps {
+  name: string
+  style?: CSSProperties
+  className?: string
 }
 
-export function Icon({ name, style, filled }: Props) {
+export function Icon({ name, style, className = '' }: IconProps) {
   return (
-    <span className="material-symbols-outlined" style={{
-      fontVariationSettings: `'FILL' ${filled ? 1 : 0}, 'wght' 300, 'GRAD' 0, 'opsz' 24`,
-      ...style,
-    }}>
+    <span className={`material-symbols-outlined ${className}`} style={{ fontSize: 20, ...style }}>
       {name}
     </span>
-  );
+  )
 }

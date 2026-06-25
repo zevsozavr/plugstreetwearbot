@@ -1,139 +1,108 @@
-import { useState, useMemo } from 'react';
-import { useNavigate, useSearchParams } from 'react-router-dom';
-import { BottomBar } from '../components/BottomBar';
-import { useData } from '../context/DataContext';
-import { useLang } from '../context/LangContext';
-import { useFavorites } from '../context/FavoritesContext';
-
-type SortKey = 'default' | 'price-asc' | 'price-desc' | 'name-asc' | 'name-desc';
+import { useNavigate } from 'react-router-dom'
+import { useData } from '../context/DataContext'
+import { useFavorites } from '../context/FavoritesContext'
+import { BottomBar } from '../components/BottomBar'
 
 export function Products() {
-  const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
-  const { products, categories } = useData();
-  const { t } = useLang();
-  const { isFavorite, toggleFavorite } = useFavorites();
-  const activeCategory = searchParams.get('category') || '';
-  const [sort, setSort] = useState<SortKey>('default');
-  const [showSort, setShowSort] = useState(false);
-
-  const filtered = useMemo(() => {
-    let list = activeCategory ? products.filter((p) => p.category === activeCategory) : [...products];
-    switch (sort) {
-      case 'price-asc': list.sort((a, b) => a.price - b.price); break;
-      case 'price-desc': list.sort((a, b) => b.price - a.price); break;
-      case 'name-asc': list.sort((a, b) => a.name.localeCompare(b.name)); break;
-      case 'name-desc': list.sort((a, b) => b.name.localeCompare(a.name)); break;
-    }
-    return list;
-  }, [products, activeCategory, sort]);
-
-  const sortOptions: { key: SortKey; label: string }[] = [
-    { key: 'default', label: t('products.sort.default') },
-    { key: 'price-asc', label: t('products.sort.price.asc') },
-    { key: 'price-desc', label: t('products.sort.price.desc') },
-    { key: 'name-asc', label: t('products.sort.name.asc') },
-    { key: 'name-desc', label: t('products.sort.name.desc') },
-  ];
-
-  const currentSortLabel = sortOptions.find((o) => o.key === sort)?.label || t('products.sort.default');
+  const navigate = useNavigate()
+  const { products } = useData()
+  const { isFavorite, toggleFavorite } = useFavorites()
 
   return (
-    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 96, overflowX: 'hidden' }}>
-      <header style={{
-        position: 'fixed', top: 0, width: '100%', zIndex: 60,
-        background: 'rgba(15,21,36,0.4)', backdropFilter: 'blur(24px)',
-        borderBottom: '1px solid rgba(255,255,255,0.1)',
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 24px', height: 64,
-      }}>
-        <button onClick={() => navigate(-1)} style={{ color: 'var(--primary)' }} className="active:scale-90">
+    <div style={{ background: '#0a0e1a', minHeight: '100vh', paddingBottom: 128 }}>
+      {/* Top App Bar */}
+      <header
+        style={{
+          position: 'fixed',
+          top: 0,
+          width: '100%',
+          zIndex: 100,
+          background: 'rgba(15, 21, 36, 0.4)',
+          backdropFilter: 'blur(24px)',
+          borderBottom: '1px solid rgba(255,255,255,0.1)',
+          display: 'flex',
+          justifyContent: 'space-between',
+          alignItems: 'center',
+          padding: '0 24px',
+          height: 64,
+        }}
+      >
+        <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: '#7dd3fc', display: 'flex' }}>
           <span className="material-symbols-outlined" style={{ fontSize: 28 }}>arrow_back</span>
         </button>
-        <h1 style={{ fontSize: 20, fontWeight: 800, letterSpacing: '-0.02em', color: 'var(--primary)' }}>{t('products.title')}</h1>
-        <div style={{ width: 40 }} />
+        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>PIECES</h1>
+        <button onClick={() => navigate('/cart')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: '#7dd3fc', display: 'flex' }}>
+          <span className="material-symbols-outlined" style={{ fontSize: 28 }}>shopping_bag</span>
+        </button>
       </header>
 
-      <main style={{ paddingTop: 80, paddingLeft: 24, paddingRight: 24 }}>
-        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', marginBottom: 24, paddingBottom: 4 }} className="hide-scrollbar">
-          {categories.map((cat) => {
-            const active = activeCategory === cat.name || (!activeCategory && cat.name === 'All');
+      <main style={{ paddingTop: 80, paddingLeft: 16, paddingRight: 16, paddingBottom: 32 }}>
+        {/* Product Grid */}
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
+          {products.map((p, i) => {
+            const aspectRatios = ['3/4', '4/5', '1/1', '3/4']
+            const ar = aspectRatios[i % aspectRatios.length]
             return (
-              <button key={cat.id} onClick={() => {
-                if (cat.name === 'All') { setSearchParams({}); return; }
-                setSearchParams({ category: cat.name });
-              }}
-                style={{
-                  flexShrink: 0, padding: '10px 24px', borderRadius: 9999,
-                  background: active ? 'var(--primary)' : undefined,
-                  color: active ? 'var(--on-primary)' : 'var(--on-surface-variant)',
-                  fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap',
-                  boxShadow: active ? '0 0 15px rgba(123,209,250,0.3)' : 'none',
-                  border: active ? 'none' : undefined,
-                }}
-                className={active ? '' : 'glass-card'}>
-                {t('categories.' + cat.name)}
-              </button>
-            );
+              <div key={p.id} className="group" onClick={() => navigate(`/product/${p.id}`)} style={{ cursor: 'pointer' }}>
+                <div
+                  style={{
+                    position: 'relative',
+                    aspectRatio: ar,
+                    borderRadius: 16,
+                    overflow: 'hidden',
+                    background: 'rgba(15, 21, 36, 0.6)',
+                    backdropFilter: 'blur(16px)',
+                    border: '1px solid rgba(125, 211, 252, 0.1)',
+                    marginBottom: 12,
+                  }}
+                >
+                  <img
+                    src={p.image}
+                    alt={p.name}
+                    style={{
+                      width: '100%',
+                      height: '100%',
+                      objectFit: 'cover',
+                      transition: 'transform 0.5s',
+                    }}
+                    className="group-hover:scale-110"
+                  />
+                  <button
+                    onClick={(e) => { e.stopPropagation(); toggleFavorite(p) }}
+                    style={{
+                      position: 'absolute',
+                      top: 8,
+                      right: 8,
+                      width: 32,
+                      height: 32,
+                      borderRadius: '50%',
+                      background: 'rgba(26, 36, 56, 0.75)',
+                      backdropFilter: 'blur(24px)',
+                      border: '1px solid rgba(125, 211, 252, 0.15)',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      cursor: 'pointer',
+                      color: isFavorite(p.id) ? '#ff6b6b' : '#a0b4c4',
+                      padding: 0,
+                    }}
+                  >
+                    <span className="material-symbols-outlined" style={{ fontSize: 14, fontVariationSettings: isFavorite(p.id) ? "'FILL' 1" : "'FILL' 0" }}>
+                      favorite
+                    </span>
+                  </button>
+                </div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+                  <span style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0' }}>{p.name}</span>
+                  <span style={{ fontSize: 14, color: '#7dd3fc' }}>${p.price.toLocaleString()}</span>
+                </div>
+              </div>
+            )
           })}
         </div>
-
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 20 }}>
-          <span style={{ fontSize: 13, color: 'var(--on-surface-variant)' }}>{filtered.length} {t('products.count')}</span>
-          <div style={{ position: 'relative' }}>
-            <button onClick={() => setShowSort(!showSort)}
-              style={{ display: 'flex', alignItems: 'center', gap: 4, fontSize: 13, color: 'var(--on-surface-variant)', background: 'none', padding: '4px 8px' }}>
-              <span className="material-symbols-outlined" style={{ fontSize: 16 }}>sort</span>
-              {currentSortLabel}
-            </button>
-            {showSort && (
-              <div className="glass-elevated" style={{
-                position: 'absolute', top: '100%', right: 0, zIndex: 50,
-                borderRadius: 12, padding: 8, minWidth: 200,
-              }}>
-                {sortOptions.map((opt) => (
-                  <button key={opt.key} onClick={() => { setSort(opt.key); setShowSort(false); }}
-                    style={{
-                      display: 'block', width: '100%', textAlign: 'left', padding: '10px 12px',
-                      borderRadius: 12, background: sort === opt.key ? 'rgba(125,211,252,0.08)' : 'transparent',
-                      fontSize: 14, color: sort === opt.key ? 'var(--primary)' : 'var(--on-surface)',
-                    }}>
-                    {opt.label}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-        </div>
-
-        <section style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16 }}>
-          {filtered.map((p, i) => (
-            <div key={p.id} onClick={() => navigate(`/product/${p.id}`)}
-              style={{ cursor: 'pointer', marginTop: i % 2 === 1 ? 24 : 0 }}>
-              <div style={{
-                position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: 16, overflow: 'hidden',
-              }} className="glass-card">
-                <img src={p.image} alt={p.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <button onClick={(e) => { e.stopPropagation(); toggleFavorite(p); }} style={{
-                  position: 'absolute', top: 12, right: 12, width: 32, height: 32, borderRadius: '50%',
-                  background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(125,211,252,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: isFavorite(p.id) ? 'var(--error)' : 'rgba(255,255,255,0.8)', zIndex: 5,
-                }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 14, fontVariationSettings: isFavorite(p.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
-                </button>
-              </div>
-              <div style={{ padding: '8px 4px' }}>
-                <p style={{ fontSize: 11, fontWeight: 500, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('categories.' + p.category)}</p>
-                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--on-surface)', marginTop: 2 }}>{p.name}</p>
-                <p style={{ fontSize: 14, fontWeight: 700, color: 'var(--primary)', marginTop: 2 }}>{p.price.toLocaleString()}₴</p>
-              </div>
-            </div>
-          ))}
-        </section>
       </main>
 
       <BottomBar />
     </div>
-  );
+  )
 }

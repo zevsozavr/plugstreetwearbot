@@ -1,52 +1,59 @@
-import type { ButtonHTMLAttributes } from 'react';
+import type { ReactNode, CSSProperties, MouseEvent } from 'react'
 
-interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
-  variant?: 'primary' | 'glass' | 'ghost';
-  fullWidth?: boolean;
-  glow?: boolean;
+interface ButtonProps {
+  children: ReactNode
+  onClick?: (e: MouseEvent<HTMLButtonElement>) => void
+  variant?: 'primary' | 'glass' | 'ghost'
+  fullWidth?: boolean
+  glow?: boolean
+  style?: CSSProperties
+  disabled?: boolean
+  type?: 'button' | 'submit'
 }
 
-export function Button({ variant = 'primary', fullWidth, glow, style, children, ...props }: Props) {
-  const base: React.CSSProperties = {
-    fontWeight: 600,
-    fontSize: 13,
-    textTransform: 'uppercase',
-    letterSpacing: '0.05em',
-    padding: '14px 24px',
-    borderRadius: 12,
-    transition: 'all 0.2s',
+export function Button({ children, onClick, variant = 'primary', fullWidth, glow, style, disabled, type = 'button' }: ButtonProps) {
+  const base: CSSProperties = {
     display: 'inline-flex',
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
     border: 'none',
-  };
+    cursor: disabled ? 'not-allowed' : 'pointer',
+    borderRadius: 16,
+    fontWeight: 600,
+    fontSize: 14,
+    padding: '12px 24px',
+    width: fullWidth ? '100%' : 'auto',
+    opacity: disabled ? 0.6 : 1,
+    transition: 'all 0.2s',
+  }
 
-  const variants: Record<string, React.CSSProperties> = {
+  const variants: Record<string, CSSProperties> = {
     primary: {
-      background: 'var(--primary)',
-      color: 'var(--on-primary)',
-      ...(glow ? { boxShadow: '0 0 20px rgba(125,211,252,0.2)' } : {}),
+      background: '#7dd3fc',
+      color: '#001f2e',
+      boxShadow: glow ? '0 0 20px rgba(125,211,252,0.3)' : 'none',
     },
     glass: {
-      background: 'rgba(125, 211, 252, 0.1)',
-      color: 'var(--primary)',
-      border: '1px solid rgba(125, 211, 252, 0.3)',
+      background: 'rgba(15, 21, 36, 0.6)',
+      backdropFilter: 'blur(16px)',
+      border: '1px solid rgba(125, 211, 252, 0.1)',
+      color: '#e0e8f0',
     },
     ghost: {
       background: 'transparent',
-      color: 'var(--on-surface-variant)',
-      border: '1px solid rgba(255,255,255,0.1)',
+      color: '#7dd3fc',
     },
-  };
+  }
 
   return (
     <button
-      className="active:scale-95"
-      style={{ ...base, ...variants[variant], ...(fullWidth ? { width: '100%' } : {}), ...style }}
-      {...props}
+      type={type}
+      onClick={onClick}
+      disabled={disabled}
+      style={{ ...base, ...variants[variant], ...style }}
     >
       {children}
     </button>
-  );
+  )
 }
