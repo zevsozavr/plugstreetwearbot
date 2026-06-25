@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { BottomBar } from '../components/BottomBar';
 import { useData } from '../context/DataContext';
 import { useLang } from '../context/LangContext';
+import { useFavorites } from '../context/FavoritesContext';
 
 type SortKey = 'default' | 'price-asc' | 'price-desc' | 'name-asc' | 'name-desc';
 
@@ -11,6 +12,7 @@ export function Products() {
   const [searchParams, setSearchParams] = useSearchParams();
   const { products, categories } = useData();
   const { t } = useLang();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const activeCategory = searchParams.get('category') || '';
   const [sort, setSort] = useState<SortKey>('default');
   const [showSort, setShowSort] = useState(false);
@@ -112,6 +114,14 @@ export function Products() {
                 position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: 16, overflow: 'hidden',
               }} className="glass-card">
                 <img src={p.image} alt={p.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <button onClick={(e) => { e.stopPropagation(); toggleFavorite(p); }} style={{
+                  position: 'absolute', top: 12, right: 12, width: 32, height: 32, borderRadius: '50%',
+                  background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
+                  border: '1px solid rgba(125,211,252,0.1)', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  color: isFavorite(p.id) ? 'var(--error)' : 'rgba(255,255,255,0.8)', zIndex: 5,
+                }}>
+                  <span className="material-symbols-outlined" style={{ fontSize: 14, fontVariationSettings: isFavorite(p.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
+                </button>
               </div>
               <div style={{ padding: '8px 4px' }}>
                 <p style={{ fontSize: 11, fontWeight: 500, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('categories.' + p.category)}</p>

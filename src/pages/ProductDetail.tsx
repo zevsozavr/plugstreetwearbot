@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useData } from '../context/DataContext';
 import { useLang } from '../context/LangContext';
+import { useFavorites } from '../context/FavoritesContext';
 
 export function ProductDetail() {
   const { id } = useParams();
@@ -10,6 +11,7 @@ export function ProductDetail() {
   const { addItem } = useCart();
   const { products } = useData();
   const { t } = useLang();
+  const { isFavorite, toggleFavorite } = useFavorites();
   const product = products.find((p) => p.id === id);
 
   const [size, setSize] = useState(product?.sizes[0] || '');
@@ -196,8 +198,8 @@ export function ProductDetail() {
 
       <div style={{ position: 'fixed', bottom: 0, left: 0, width: '100%', zIndex: 60, padding: 24, background: 'linear-gradient(to top, #0a0e1a 0%, rgba(10,14,26,0.8) 100%)' }}>
         <div className="glass-elevated" style={{ borderRadius: 16, padding: 16, display: 'flex', gap: 16, alignItems: 'center', boxShadow: '0 0 40px rgba(0,0,0,0.5)' }}>
-          <button className="glass-card" style={{ width: 56, height: 56, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span className="material-symbols-outlined" style={{ fontSize: 24, color: 'var(--on-surface-variant)' }}>favorite</span>
+          <button onClick={() => product && toggleFavorite(product)} className="glass-card" style={{ width: 56, height: 56, borderRadius: 12, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span className="material-symbols-outlined" style={{ fontSize: 24, color: product && isFavorite(product.id) ? 'var(--error)' : 'var(--on-surface-variant)', fontVariationSettings: product && isFavorite(product.id) ? "'FILL' 1" : "'FILL' 0" }}>favorite</span>
           </button>
           <button onClick={handleAdd} style={{
             flex: 1, height: 56, background: 'var(--primary)', color: 'var(--on-primary)',
