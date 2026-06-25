@@ -1,11 +1,10 @@
 import { createContext, useContext, useState, useEffect, type ReactNode } from 'react';
-import type { Product, Offer, Category, Collection } from '../types';
+import type { Product, Category, Collection } from '../types';
 
 const STORAGE_KEY = 'trippie_data';
 
 interface StoredData {
   products: Product[];
-  offers: Offer[];
   collection: Collection;
 }
 
@@ -16,10 +15,6 @@ interface DataContextValue {
   deleteProduct: (id: string) => void;
   categories: Category[];
   addCategory: (name: string) => void;
-  offers: Offer[];
-  addOffer: (o: Offer) => void;
-  toggleOffer: (id: string) => void;
-  deleteOffer: (id: string) => void;
   collection: Collection;
   setCollection: (c: Collection) => void;
 }
@@ -74,10 +69,6 @@ export function DataProvider({ children }: { children: ReactNode }) {
   const saved = loadData();
 
   const [products, setProducts] = useState<Product[]>(saved?.products || defaultProducts);
-  const [offers, setOffers] = useState<Offer[]>(saved?.offers || [
-    { id: 'o1', title: 'Нова колекція', description: 'Знижка 20% на весь верхній одяг', discount: 20, code: 'WINTER20', active: true },
-    { id: 'o2', title: 'Безкоштовна доставка', description: 'Безкоштовна доставка при замовленні від 20000₴', discount: 0, code: 'FREESHIP', active: true },
-  ]);
   const [collection, setCollectionState] = useState<Collection>(saved?.collection || defaultCollection);
 
   const [categories, setCategories] = useState<Category[]>(() => {
@@ -92,8 +83,8 @@ export function DataProvider({ children }: { children: ReactNode }) {
   });
 
   useEffect(() => {
-    saveData({ products, offers, collection });
-  }, [products, offers, collection]);
+    saveData({ products, collection });
+  }, [products, collection]);
 
   const addProduct = (p: Product) => {
     setProducts((prev) => [...prev, p]);
@@ -112,13 +103,9 @@ export function DataProvider({ children }: { children: ReactNode }) {
     });
   };
 
-  const addOffer = (o: Offer) => setOffers((prev) => [...prev, o]);
-  const toggleOffer = (id: string) => setOffers((prev) => prev.map((o) => o.id === id ? { ...o, active: !o.active } : o));
-  const deleteOffer = (id: string) => setOffers((prev) => prev.filter((o) => o.id !== id));
-
   const setCollection = (c: Collection) => setCollectionState(c);
 
-  return <DataContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, categories, addCategory, offers, addOffer, toggleOffer, deleteOffer, collection, setCollection }}>{children}</DataContext.Provider>;
+  return <DataContext.Provider value={{ products, addProduct, updateProduct, deleteProduct, categories, addCategory, collection, setCollection }}>{children}</DataContext.Provider>;
 }
 
 export function useData() {

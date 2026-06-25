@@ -1,15 +1,13 @@
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLang } from '../context/LangContext'
-import { useTheme } from '../context/ThemeContext'
 
 import { BottomBar } from '../components/BottomBar'
 
 export function Settings() {
   const navigate = useNavigate()
   const { isAdmin } = useAuth()
-  const { lang, setLang } = useLang()
-  const { darkMode, toggleDarkMode } = useTheme()
+  const { lang, setLang, t } = useLang()
 
   const sectionStyle: React.CSSProperties = {
     background: 'rgba(15, 21, 36, 0.6)',
@@ -64,7 +62,7 @@ export function Settings() {
         {/* Preferences */}
         <section style={{ marginBottom: 24 }}>
           <h3 style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: '#c8a0f0', opacity: 0.7, padding: '0 4px', marginBottom: 12 }}>
-            Preferences
+            {t('settings.preferences')}
           </h3>
           <div style={sectionStyle}>
             <div style={{ ...rowStyle, ...rowBorder }}>
@@ -83,59 +81,11 @@ export function Settings() {
                 >
                   <span className="material-symbols-outlined">language</span>
                 </div>
-                <span style={{ fontWeight: 500, color: '#e0e8f0' }}>Language</span>
+                <span style={{ fontWeight: 500, color: '#e0e8f0' }}>{t('settings.lang')}</span>
               </div>
               <div onClick={() => setLang(lang === 'UA' ? 'RU' : 'UA')} style={{ display: 'flex', alignItems: 'center', gap: 4, color: '#7dd3fc' }}>
                 <span style={{ fontSize: 14, fontWeight: 700 }}>{lang === 'UA' ? 'Українська' : 'Русский'}</span>
                 <span className="material-symbols-outlined" style={{ fontSize: 16 }}>expand_more</span>
-              </div>
-            </div>
-            <div style={rowStyle}>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                <div
-                  style={{
-                    width: 40,
-                    height: 40,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    borderRadius: 24,
-                    background: 'rgba(200, 160, 240, 0.1)',
-                    color: '#c8a0f0',
-                  }}
-                >
-                  <span className="material-symbols-outlined">dark_mode</span>
-                </div>
-                <span style={{ fontWeight: 500, color: '#e0e8f0' }}>Dark Mode</span>
-              </div>
-              <div
-                onClick={toggleDarkMode}
-                style={{
-                  width: 48,
-                  height: 24,
-                  background: 'rgba(125, 211, 252, 0.2)',
-                  borderRadius: 9999,
-                  position: 'relative',
-                  padding: 4,
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  transition: 'all 0.3s',
-                }}
-              >
-                <div
-                  style={{
-                    width: 16,
-                    height: 16,
-                    background: '#7dd3fc',
-                    borderRadius: '50%',
-                    position: 'absolute',
-                    right: darkMode ? 4 : undefined,
-                    left: darkMode ? undefined : 4,
-                    boxShadow: '0 0 10px rgba(125,211,252,0.6)',
-                    transition: 'all 0.3s',
-                  }}
-                />
               </div>
             </div>
           </div>
@@ -146,7 +96,7 @@ export function Settings() {
         {/* About */}
         <section style={{ paddingTop: 16, paddingBottom: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#a0b4c4' }}>
-            Version 4.2.0-GLACIER
+            {t('settings.version')} 4.2.0-GLACIER
           </p>
           {isAdmin && (
             <button
@@ -162,7 +112,7 @@ export function Settings() {
                 fontSize: 14,
               }}
             >
-              Admin Panel
+              {t('settings.panel')}
             </button>
           )}
         </section>

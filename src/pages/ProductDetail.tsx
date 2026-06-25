@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import { useCart } from '../context/CartContext'
 import { useFavorites } from '../context/FavoritesContext'
+import { useLang } from '../context/LangContext'
 
 export function ProductDetail() {
   const { id } = useParams()
@@ -10,6 +11,7 @@ export function ProductDetail() {
   const { products } = useData()
   const { addItem } = useCart()
   const { isFavorite, toggleFavorite } = useFavorites()
+  const { t } = useLang()
 
   const product = products.find((p) => p.id === id)
   const [selectedSize, setSelectedSize] = useState(product?.sizes[0] || '')
@@ -38,7 +40,7 @@ export function ProductDetail() {
   if (!product) {
     return (
       <div style={{ background: 'var(--bg)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
-        <p style={{ color: '#a0b4c4' }}>Product not found</p>
+        <p style={{ color: '#a0b4c4' }}>{t('product.notfound')}</p>
       </div>
     )
   }
@@ -181,7 +183,7 @@ export function ProductDetail() {
                 <p style={{ color: '#a0b4c4', fontWeight: 500, marginTop: 4 }}>{product.condition}</p>
               </div>
               <div style={{ textAlign: 'right' }}>
-                <span style={{ fontSize: 24, fontWeight: 700, color: '#7dd3fc' }}>${product.price.toLocaleString()}</span>
+                <span style={{ fontSize: 24, fontWeight: 700, color: '#7dd3fc' }}>₴{product.price.toLocaleString()}</span>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4, marginTop: 4, justifyContent: 'flex-end' }}>
                   <span className="material-symbols-outlined" style={{ color: '#c8a0f0', fontSize: 14, fontVariationSettings: "'FILL' 1" }}>star</span>
                   <span style={{ fontSize: 14, fontWeight: 500, color: '#e0e8f0' }}>4.9</span>
@@ -192,7 +194,7 @@ export function ProductDetail() {
             {/* Color Swatches */}
             <div style={{ marginTop: 32 }}>
               <h3 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4', marginBottom: 12 }}>
-                Color Way
+                {t('product.color')}
               </h3>
               <div style={{ display: 'flex', gap: 12 }}>
                 {product.colors.map((c, i) => (
@@ -227,10 +229,10 @@ export function ProductDetail() {
             <div style={{ marginTop: 32 }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12 }}>
                 <h3 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4' }}>
-                  Select Size
+                  {t('product.size')}
                 </h3>
                 <button style={{ fontSize: 12, color: '#7dd3fc', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>
-                  Size Guide
+                  {t('product.size')} Guide
                 </button>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
@@ -263,7 +265,7 @@ export function ProductDetail() {
             {/* Quantity */}
             <div style={{ marginTop: 32, display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderTop: '1px solid rgba(255,255,255,0.05)', paddingTop: 24 }}>
               <h3 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4' }}>
-                Quantity
+                {t('product.quantity')}
               </h3>
               <div
                 style={{
@@ -381,7 +383,7 @@ export function ProductDetail() {
                   </button>
                 </div>
                 <h4 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{p.name}</h4>
-                <p style={{ fontSize: 12, color: '#7dd3fc', fontWeight: 700, marginTop: 4 }}>${p.price.toLocaleString()}</p>
+                <p style={{ fontSize: 12, color: '#7dd3fc', fontWeight: 700, marginTop: 4 }}>₴{p.price.toLocaleString()}</p>
               </div>
             ))}
           </div>

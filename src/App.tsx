@@ -4,7 +4,6 @@ import { FavoritesProvider } from './context/FavoritesContext';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import { LangProvider } from './context/LangContext';
-import { ThemeProvider } from './context/ThemeContext';
 import { Storefront } from './pages/Storefront';
 import { ProductDetail } from './pages/ProductDetail';
 import { Cart } from './pages/Cart';
@@ -15,14 +14,12 @@ import { Products } from './pages/Products';
 import { Favorites } from './pages/Favorites';
 import { AdminDashboard } from './pages/admin/Dashboard';
 import { AdminProducts } from './pages/admin/Products';
-import { AdminOffers } from './pages/admin/Offers';
 import { AdminPhotos } from './pages/admin/Photos';
 import { AdminCollection } from './pages/admin/Collection';
 
 export default function App() {
   return (
     <BrowserRouter>
-      <ThemeProvider>
       <AuthProvider>
         <DataProvider>
           <CartProvider>
@@ -39,7 +36,7 @@ export default function App() {
                 <Route path="/settings" element={<Settings />} />
                 <Route path="/admin" element={<AdminDashboard />} />
                 <Route path="/admin/products" element={<AdminProducts />} />
-                <Route path="/admin/offers" element={<AdminOffers />} />
+
                 <Route path="/admin/photos" element={<AdminPhotos />} />
                 <Route path="/admin/collection" element={<AdminCollection />} />
               </Routes>
@@ -48,7 +45,6 @@ export default function App() {
         </CartProvider>
       </DataProvider>
       </AuthProvider>
-      </ThemeProvider>
     </BrowserRouter>
   );
 }

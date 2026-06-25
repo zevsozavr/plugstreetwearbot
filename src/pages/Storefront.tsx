@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import { useCart } from '../context/CartContext'
+import { useLang } from '../context/LangContext'
 import { Header } from '../components/Header'
 import { BottomBar } from '../components/BottomBar'
 import { ProductCardHorizontal } from '../components/ProductCard'
@@ -9,6 +10,7 @@ export function Storefront() {
   const navigate = useNavigate()
   const { products, collection } = useData()
   const { addItem } = useCart()
+  const { t } = useLang()
 
   const newArrivals = products.slice(0, 3)
   const masonry = products
@@ -71,7 +73,7 @@ export function Storefront() {
               }}
               className="glow-hover"
             >
-              Explore Now
+              {t('store.view.collection')}
             </button>
           </div>
         </section>
@@ -120,9 +122,9 @@ export function Storefront() {
         {/* New Arrivals (Horizontal Scroll) */}
         <section style={{ paddingTop: 40, paddingBottom: 40 }}>
           <div style={{ padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24 }}>
-            <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: '#e0e8f0' }}>New Arrivals</h3>
+            <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', color: '#e0e8f0' }}>{t('store.new.arrivals')}</h3>
             <button onClick={() => navigate('/products')} style={{ color: '#7dd3fc', fontSize: 14, fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer', textDecoration: 'underline' }}>
-              View All
+              {t('store.view.all')}
             </button>
           </div>
           <div style={{ display: 'flex', overflowX: 'auto', gap: 24, padding: '0 24px' }} className="hide-scrollbar">
@@ -131,7 +133,7 @@ export function Storefront() {
                 key={p.id}
                 image={p.image}
                 name={p.name}
-                price={`$${p.price.toLocaleString()}`}
+                price={`₴${p.price.toLocaleString()}`}
                 onAddToCart={() => addItem(p, p.sizes[0], p.colors[0].name)}
               />
             ))}
@@ -188,7 +190,7 @@ export function Storefront() {
                   cursor: 'pointer',
                 }}
               >
-                Discover Series
+                {t('store.view.collection')}
               </button>
             </div>
           </div>
@@ -196,7 +198,7 @@ export function Storefront() {
 
         {/* Curated Selection (Masonry Grid) */}
         <section style={{ padding: '0 24px 80px' }}>
-          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', marginBottom: 32, color: '#e0e8f0' }}>Curated Selection</h3>
+          <h3 style={{ fontSize: 24, fontWeight: 700, letterSpacing: '-0.02em', marginBottom: 32, color: '#e0e8f0' }}>{t('store.featured')}</h3>
           <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 16, alignItems: 'flex-start' }}>
             {/* Col 1 */}
             <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
@@ -252,13 +254,13 @@ export function Storefront() {
                           boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                         }}
                       >
-                        ADD TO BAG
+                        {t('product.add').toUpperCase()}
                       </button>
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0' }}>{p.name}</span>
-                    <span style={{ fontSize: 14, color: '#7dd3fc' }}>${p.price.toLocaleString()}</span>
+                    <span style={{ fontSize: 14, color: '#7dd3fc' }}>₴{p.price.toLocaleString()}</span>
                   </div>
                 </div>
               ))}
@@ -320,13 +322,13 @@ export function Storefront() {
                             boxShadow: '0 4px 20px rgba(0,0,0,0.5)',
                           }}
                         >
-                          ADD TO BAG
+                          {t('product.add').toUpperCase()}
                         </button>
                       </div>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                       <span style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0' }}>{p.name}</span>
-                      <span style={{ fontSize: 14, color: '#7dd3fc' }}>${p.price.toLocaleString()}</span>
+                      <span style={{ fontSize: 14, color: '#7dd3fc' }}>₴{p.price.toLocaleString()}</span>
                     </div>
                   </div>
                 )

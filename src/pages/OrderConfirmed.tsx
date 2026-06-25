@@ -205,7 +205,7 @@ export function OrderConfirmed() {
                   {item.selectedColor} • Qty {item.quantity}
                 </p>
                 <p style={{ fontSize: 14, fontWeight: 700, color: '#7dd3fc', marginTop: 8 }}>
-                  ${(item.price * item.quantity).toLocaleString()}
+                  ₴{(item.price * item.quantity).toLocaleString()}
                 </p>
               </div>
             </div>
@@ -222,7 +222,7 @@ export function OrderConfirmed() {
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8 }}>
                 <span style={{ fontSize: 14, fontWeight: 700, color: '#e0e8f0' }}>Total</span>
-                <span style={{ fontSize: 18, fontWeight: 800, color: '#7dd3fc' }}>${totalPrice.toFixed(2)}</span>
+                <span style={{ fontSize: 18, fontWeight: 800, color: '#7dd3fc' }}>₴{totalPrice.toFixed(2)}</span>
               </div>
             </div>
           </div>

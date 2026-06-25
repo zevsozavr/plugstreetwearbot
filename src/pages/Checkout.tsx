@@ -2,19 +2,16 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
 import { useLang } from '../context/LangContext'
-import { useData } from '../context/DataContext'
 
 export function Checkout() {
   const navigate = useNavigate()
   const { items, totalPrice, clearCart } = useCart()
   const { t } = useLang()
-  const { offers } = useData()
   const [name, setName] = useState('')
   const [phone, setPhone] = useState('')
   const [address, setAddress] = useState('')
   const [submitting, setSubmitting] = useState(false)
 
-  const activeOffers = offers.filter((o) => o.active)
   const subtotal = totalPrice
   const shipping = subtotal >= 20000 ? 0 : 500
   const total = subtotal + shipping
@@ -32,9 +29,9 @@ export function Checkout() {
           `📞 ${phone}`,
           `📍 ${address}`,
           '',
-          ...items.map((i) => `• ${i.name} (${i.selectedSize}, ${i.selectedColor}) x${i.quantity} — $${(i.price * i.quantity).toLocaleString()}`),
+          ...items.map((i) => `• ${i.name} (${i.selectedSize}, ${i.selectedColor}) x${i.quantity} — ₴${(i.price * i.quantity).toLocaleString()}`),
           '',
-          `💰 *Всього: $${total.toLocaleString()}*`,
+          `💰 *Всього: ₴${total.toLocaleString()}*`,
         ].join('\n')
 
         await fetch(`https://api.telegram.org/bot${import.meta.env.VITE_BOT_TOKEN}/sendMessage`, {
@@ -181,29 +178,24 @@ export function Checkout() {
                   <span style={{ color: '#a0b4c4' }}>
                     {item.name} x{item.quantity}
                   </span>
-                  <span style={{ color: '#e0e8f0', fontWeight: 500 }}>${(item.price * item.quantity).toLocaleString()}</span>
+                  <span style={{ color: '#e0e8f0', fontWeight: 500 }}>₴{(item.price * item.quantity).toLocaleString()}</span>
                 </div>
               ))}
             </div>
-            {activeOffers.length > 0 && (
-              <div style={{ marginTop: 12, padding: 12, background: 'rgba(200, 160, 240, 0.1)', borderRadius: 16 }}>
-                <p style={{ color: '#c8a0f0', fontSize: 12, fontWeight: 600 }}>Active promos: {activeOffers.map((o) => o.code).join(', ')}</p>
-              </div>
-            )}
             <div style={{ height: 1, background: 'rgba(255,255,255,0.1)', marginTop: 16, marginBottom: 12 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: 14 }}>
               <span style={{ color: '#a0b4c4' }}>Subtotal</span>
-              <span style={{ color: '#e0e8f0' }}>${subtotal.toLocaleString()}</span>
+              <span style={{ color: '#e0e8f0' }}>₴{subtotal.toLocaleString()}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: 14 }}>
               <span style={{ color: '#a0b4c4' }}>Shipping</span>
               <span style={{ color: shipping === 0 ? '#7dd3fc' : '#e0e8f0', fontWeight: 500 }}>
-                {shipping === 0 ? 'Free' : `$${shipping.toLocaleString()}`}
+                {shipping === 0 ? t('cart.shipping.free') : `₴${shipping.toLocaleString()}`}
               </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 18, fontWeight: 700 }}>
               <span style={{ color: '#e0e8f0' }}>Total</span>
-              <span style={{ color: '#7dd3fc' }}>${total.toLocaleString()}</span>
+              <span style={{ color: '#7dd3fc' }}>₴{total.toLocaleString()}</span>
             </div>
           </section>
 

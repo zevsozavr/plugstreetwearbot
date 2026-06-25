@@ -96,7 +96,6 @@ body {
 
 :root {
   --bg: #0a0e1a;
-  --header-bg: rgba(15, 21, 36, 0.4);
   --pad: 24px;
   --rounded-md: 8px;
   --rounded-lg: 16px;
@@ -115,17 +114,4 @@ body {
   --error: #ff6b6b;
   --surface-low: #111828;
   --surface-highest: #202c42;
-}
-
-[data-theme="light"] {
-  --bg: #eef1f5;
-  --header-bg: rgba(255, 255, 255, 0.6);
-  --on-surface: #1a1d2e;
-  --on-surface-variant: #5a6a7a;
-  --primary: #0284c7;
-  --primary-container: #bae6fd;
-  --glass-bg: rgba(255, 255, 255, 0.6);
-  --glass-border: 1px solid rgba(2, 132, 199, 0.15);
-  --surface-low: #dce0e8;
-  --surface-highest: #c8d0dc;
 }

@@ -119,7 +119,7 @@ export function Favorites() {
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <span style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0' }}>{p.name}</span>
-                    <span style={{ fontSize: 14, color: '#7dd3fc' }}>${p.price.toLocaleString()}</span>
+                    <span style={{ fontSize: 14, color: '#7dd3fc' }}>₴{p.price.toLocaleString()}</span>
                   </div>
                 </div>
               )
