@@ -51,7 +51,7 @@ export function Settings() {
         }}
       >
         <div style={{ width: 24 }} />
-        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>TRIPPIE</h1>
+        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>PLUGSTREETWEAR</h1>
         <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }} onClick={() => navigate('/cart')}>shopping_bag</span>
       </header>
 

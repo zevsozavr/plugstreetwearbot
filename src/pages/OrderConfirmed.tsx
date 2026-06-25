@@ -28,7 +28,7 @@ export function OrderConfirmed() {
         <button style={{ color: '#7dd3fc', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
           <span className="material-symbols-outlined">menu</span>
         </button>
-        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>TRIPPIE</h1>
+        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>PLUGSTREETWEAR</h1>
         <button style={{ color: '#7dd3fc', background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
           <span className="material-symbols-outlined">shopping_bag</span>
         </button>

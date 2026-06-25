@@ -87,7 +87,7 @@ export function ProductDetail() {
         >
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <span style={{ fontFamily: 'Inter', fontSize: 18, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>TRIPPIE</span>
+        <span style={{ fontFamily: 'Inter', fontSize: 18, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>PLUGSTREETWEAR</span>
         <button
           style={{
             width: 40,
