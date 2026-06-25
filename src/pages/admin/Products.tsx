@@ -26,6 +26,7 @@ export function AdminProducts() {
   const [condition, setCondition] = useState('New');
   const [sizesInput, setSizesInput] = useState('S, M, L');
   const [colorsInput, setColorsInput] = useState('Default:#000000');
+  const [inCollection, setInCollection] = useState(false);
 
   if (!isAdmin) return <div style={{ padding: 40, textAlign: 'center', background: 'var(--bg)', minHeight: '100vh' }}><p>{t('admin.access.denied')}</p></div>;
 
@@ -40,7 +41,7 @@ export function AdminProducts() {
   const resetForm = () => {
     setName(''); setCategory(''); setNewCategory(''); setPrice('');
     setImageDataUrl(''); setImageUrl(''); setDescription(''); setCondition('New');
-    setSizesInput('S, M, L'); setColorsInput('Default:#000000');
+    setSizesInput('S, M, L'); setColorsInput('Default:#000000'); setInCollection(false);
     setEditingId(null); setShowForm(false);
   };
 
@@ -51,6 +52,7 @@ export function AdminProducts() {
     setCondition(p.condition);
     setSizesInput(p.sizes.join(', '));
     setColorsInput(p.colors.map((c) => `${c.name}:${c.hex}`).join(', '));
+    setInCollection(p.inCollection || false);
     setShowForm(true);
   };
 
@@ -72,6 +74,7 @@ export function AdminProducts() {
       description: description || '', condition,
       sizes: parsedSizes.length > 0 ? parsedSizes : ['One Size'],
       colors: parsedColors,
+      inCollection,
     };
     if (editingId) {
       updateProduct(editingId, productData);
@@ -146,6 +149,10 @@ export function AdminProducts() {
 
             <textarea placeholder={t('admin.product.description')} value={description} onChange={(e) => setDescription(e.target.value)} rows={3}
               style={{ width: '100%', padding: '12px 16px', borderRadius: 'var(--rounded-md)', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', backdropFilter: 'blur(8px)', font: 'var(--font-body)', color: 'var(--on-surface)', resize: 'vertical' }} />
+            <label style={{ display: 'flex', alignItems: 'center', gap: 8, font: 'var(--font-body)', color: 'var(--on-surface)', cursor: 'pointer' }}>
+              <input type="checkbox" checked={inCollection} onChange={(e) => setInCollection(e.target.checked)} style={{ width: 18, height: 18, accentColor: 'var(--primary)' }} />
+              {t('admin.product.in_collection')}
+            </label>
             <Button fullWidth glow variant="primary" onClick={handleAdd}>
               {editingId ? t('admin.product.save') : t('admin.product.add')}
             </Button>

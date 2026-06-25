@@ -123,7 +123,7 @@ export function Cart() {
                           {item.selectedColor}
                         </span>
                       ) : item.selectedColor}
-                      {' '}• Size {item.selectedSize}
+                      {' '}• {t('cart.size')} {item.selectedSize}
                     </p>
                   </div>
                   <button

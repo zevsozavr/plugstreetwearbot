@@ -72,7 +72,7 @@ export function Checkout() {
         <button onClick={() => navigate('/cart')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: '#7dd3fc', display: 'flex' }}>
           <span className="material-symbols-outlined">arrow_back</span>
         </button>
-        <h1 style={{ fontFamily: 'Inter', color: '#e0e8f0', fontWeight: 600, fontSize: 18 }}>Checkout</h1>
+        <h1 style={{ fontFamily: 'Inter', color: '#e0e8f0', fontWeight: 600, fontSize: 18 }}>{t('checkout.title')}</h1>
         <div style={{ width: 24 }} />
       </header>
 
@@ -89,7 +89,7 @@ export function Checkout() {
               marginBottom: 16,
             }}
           >
-            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', marginBottom: 16 }}>Contact Information</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', marginBottom: 16 }}>{t('checkout.contact')}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               <input
                 value={name}
@@ -139,7 +139,7 @@ export function Checkout() {
               marginBottom: 16,
             }}
           >
-            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', marginBottom: 16 }}>Delivery</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', marginBottom: 16 }}>{t('checkout.delivery')}</h3>
             <textarea
               value={address}
               onChange={(e) => setAddress(e.target.value)}
@@ -171,7 +171,7 @@ export function Checkout() {
               marginBottom: 24,
             }}
           >
-            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', marginBottom: 16 }}>Order Summary</h3>
+            <h3 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0', marginBottom: 16 }}>{t('checkout.summary')}</h3>
             <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
               {items.map((item) => (
                 <div key={item.id + item.selectedSize + item.selectedColor} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 14 }}>
@@ -184,17 +184,17 @@ export function Checkout() {
             </div>
             <div style={{ height: 1, background: 'rgba(255,255,255,0.1)', marginTop: 16, marginBottom: 12 }} />
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: 14 }}>
-              <span style={{ color: '#a0b4c4' }}>Subtotal</span>
+              <span style={{ color: '#a0b4c4' }}>{t('cart.subtotal')}</span>
               <span style={{ color: '#e0e8f0' }}>₴{subtotal.toLocaleString()}</span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8, fontSize: 14 }}>
-              <span style={{ color: '#a0b4c4' }}>Shipping</span>
+              <span style={{ color: '#a0b4c4' }}>{t('cart.shipping')}</span>
               <span style={{ color: shipping === 0 ? '#7dd3fc' : '#e0e8f0', fontWeight: 500 }}>
                 {shipping === 0 ? t('cart.shipping.free') : `₴${shipping.toLocaleString()}`}
               </span>
             </div>
             <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 18, fontWeight: 700 }}>
-              <span style={{ color: '#e0e8f0' }}>Total</span>
+              <span style={{ color: '#e0e8f0' }}>{t('cart.total')}</span>
               <span style={{ color: '#7dd3fc' }}>₴{total.toLocaleString()}</span>
             </div>
           </section>
@@ -217,7 +217,7 @@ export function Checkout() {
               boxShadow: '0 0 20px rgba(125,211,252,0.3)',
             }}
           >
-            {submitting ? 'Processing...' : 'Place Order'}
+            {submitting ? t('checkout.processing') : t('checkout.place')}
           </button>
         </form>
       </main>

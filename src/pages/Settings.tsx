@@ -96,7 +96,7 @@ export function Settings() {
         {/* About */}
         <section style={{ paddingTop: 16, paddingBottom: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
           <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#a0b4c4' }}>
-            {t('settings.version')} 4.2.0-GLACIER
+            {t('settings.version')} 4.2.0{t('settings.version.suffix')}
           </p>
           {isAdmin && (
             <button

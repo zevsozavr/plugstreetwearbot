@@ -1,12 +1,14 @@
 import { useNavigate } from 'react-router-dom'
 import { useData } from '../context/DataContext'
 import { useFavorites } from '../context/FavoritesContext'
+import { useLang } from '../context/LangContext'
 import { BottomBar } from '../components/BottomBar'
 
 export function Favorites() {
   const navigate = useNavigate()
   const { products } = useData()
   const { favorites, toggleFavorite } = useFavorites()
+  const { t } = useLang()
 
   const favProducts = products.filter((p) => favorites.has(p.id))
 
@@ -32,7 +34,7 @@ export function Favorites() {
         <button onClick={() => navigate('/')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: '#7dd3fc', display: 'flex' }}>
           <span className="material-symbols-outlined" style={{ fontSize: 28 }}>arrow_back</span>
         </button>
-        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>WISHLIST</h1>
+        <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>{t('favorites.title').toUpperCase()}</h1>
         <button onClick={() => navigate('/cart')} style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, color: '#7dd3fc', display: 'flex' }}>
           <span className="material-symbols-outlined" style={{ fontSize: 28 }}>shopping_bag</span>
         </button>
@@ -44,9 +46,9 @@ export function Favorites() {
             <span className="material-symbols-outlined" style={{ fontSize: 64, color: '#a0b4c4', marginBottom: 16, display: 'block' }}>
               favorite
             </span>
-            <p style={{ color: '#a0b4c4', fontSize: 16, marginBottom: 8 }}>Your wishlist is empty</p>
+            <p style={{ color: '#a0b4c4', fontSize: 16, marginBottom: 8 }}>{t('favorites.empty')}</p>
             <p style={{ color: '#a0b4c4', fontSize: 14, marginBottom: 24, opacity: 0.7 }}>
-              Save your favorite pieces for later
+              {t('favorites.save')}
             </p>
             <button
               onClick={() => navigate('/')}
@@ -61,7 +63,7 @@ export function Favorites() {
                 fontSize: 14,
               }}
             >
-              Discover Pieces
+                {t('favorites.discover')}
             </button>
           </div>
         ) : (

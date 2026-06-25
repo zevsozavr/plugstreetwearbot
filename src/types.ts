@@ -9,6 +9,7 @@ export interface Product {
   condition: string;
   sizes: string[];
   colors: { name: string; hex: string; image?: string }[];
+  inCollection?: boolean;
 }
 
 export interface CartItem extends Product {

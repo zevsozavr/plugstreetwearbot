@@ -8,11 +8,12 @@ import { ProductCardHorizontal } from '../components/ProductCard'
 
 export function Storefront() {
   const navigate = useNavigate()
-  const { products, collection } = useData()
+  const { products, collection, categories } = useData()
   const { addItem } = useCart()
   const { t } = useLang()
 
-  const newArrivals = products.slice(0, 3)
+  const collectionProducts = products.filter((p) => p.inCollection)
+  const newArrivals = collectionProducts.length > 0 ? collectionProducts : products.slice(0, 3)
   const masonry = products
 
   return (
@@ -21,7 +22,7 @@ export function Storefront() {
 
       <main style={{ paddingTop: 64 }}>
         {/* Hero Section */}
-        <section
+        {collection.enabled && <section
           style={{
             position: 'relative',
             width: '100%',
@@ -52,10 +53,10 @@ export function Storefront() {
           </div>
           <div style={{ position: 'relative', zIndex: 10, maxWidth: 576 }}>
             <h2 style={{ fontSize: 48, fontWeight: 800, letterSpacing: '-0.03em', marginBottom: 16, color: '#e0e8f0' }}>
-              {collection.enabled ? collection.title : 'WINTER COLLECTION'}
+              {collection.enabled ? collection.title : t('store.hero.title')}
             </h2>
             <p style={{ color: '#a0b4c4', fontSize: 18, marginBottom: 32, maxWidth: 448 }}>
-              {collection.enabled ? collection.subtitle : 'Ethereal warmth engineered for the sub-zero.'}
+              {collection.enabled ? collection.subtitle : t('store.hero.text')}
             </p>
             <button
               onClick={() => navigate('/products')}
@@ -76,7 +77,7 @@ export function Storefront() {
               {t('store.view.collection')}
             </button>
           </div>
-        </section>
+        </section>}
 
         {/* Category Chips */}
         <section
@@ -96,10 +97,16 @@ export function Storefront() {
           }}
           className="hide-scrollbar"
         >
-          {['All', 'Outerwear', 'Accessories', 'Knitwear', 'Footwear'].map((cat) => (
+          {[
+            { key: 'All', label: t('store.cat.all') },
+            ...categories.filter((c) => c.name !== 'All').map((c) => ({
+              key: c.name,
+              label: t('store.cat.' + c.name.toLowerCase()) || t('categories.' + c.name) || c.name,
+            })),
+          ].map((cat) => (
             <button
-              key={cat}
-              onClick={() => cat === 'All' ? navigate('/products') : navigate('/products')}
+              key={cat.key}
+              onClick={() => navigate('/products')}
               style={{
                 padding: '8px 24px',
                 borderRadius: 9999,
@@ -107,14 +114,14 @@ export function Storefront() {
                 fontSize: 14,
                 fontWeight: 500,
                 flexShrink: 0,
-                background: cat === 'All' ? '#7dd3fc' : 'rgba(15, 21, 36, 0.6)',
-                backdropFilter: cat === 'All' ? 'none' : 'blur(16px)',
-                color: cat === 'All' ? '#001f2e' : '#a0b4c4',
-                border: cat === 'All' ? 'none' : '1px solid rgba(255,255,255,0.1)',
-                boxShadow: cat === 'All' ? '0 0 15px rgba(123,209,250,0.3)' : 'none',
+                background: cat.key === 'All' ? '#7dd3fc' : 'rgba(15, 21, 36, 0.6)',
+                backdropFilter: cat.key === 'All' ? 'none' : 'blur(16px)',
+                color: cat.key === 'All' ? '#001f2e' : '#a0b4c4',
+                border: cat.key === 'All' ? 'none' : '1px solid rgba(255,255,255,0.1)',
+                boxShadow: cat.key === 'All' ? '0 0 15px rgba(123,209,250,0.3)' : 'none',
               }}
             >
-              {cat}
+              {cat.label}
             </button>
           ))}
         </section>
@@ -141,7 +148,7 @@ export function Storefront() {
         </section>
 
         {/* Highlight Card */}
-        <section style={{ padding: '0 24px', marginBottom: 48 }}>
+        {collection.enabled && <section style={{ padding: '0 24px', marginBottom: 48 }}>
           <div
             style={{
               position: 'relative',
@@ -171,7 +178,7 @@ export function Storefront() {
             />
             <div style={{ position: 'relative', zIndex: 20, height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 40px', maxWidth: 448 }}>
               <span style={{ color: '#7dd3fc', fontWeight: 700, fontSize: 12, textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 8 }}>
-                {collection.enabled ? collection.tag : 'Featured Series'}
+                {collection.enabled ? collection.tag : t('store.highlight.tag')}
               </span>
               <h3 style={{ fontSize: 32, fontWeight: 700, marginBottom: 16, lineHeight: 1.2, color: '#e0e8f0' }}>
                 {collection.enabled ? collection.title.toUpperCase() : 'THE ALPINE COLLECTION'}
@@ -194,7 +201,7 @@ export function Storefront() {
               </button>
             </div>
           </div>
-        </section>
+        </section>}
 
         {/* Curated Selection (Masonry Grid) */}
         <section style={{ padding: '0 24px 80px' }}>

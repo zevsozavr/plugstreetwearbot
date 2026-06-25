@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../context/CartContext'
+import { useLang } from '../context/LangContext'
 import { BottomBar } from '../components/BottomBar'
 
 export function OrderConfirmed() {
   const navigate = useNavigate()
   const { items, totalPrice } = useCart()
+  const { t } = useLang()
 
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 128 }}>
@@ -71,10 +73,10 @@ export function OrderConfirmed() {
             </span>
           </div>
           <h2 style={{ color: '#7dd3fc', fontWeight: 700, fontSize: 24, letterSpacing: '0.2em', marginBottom: 8 }}>
-            ORDER CONFIRMED
+            {t('order.confirmed')}
           </h2>
           <p style={{ color: '#a0b4c4', fontWeight: 300, fontSize: 14, maxWidth: 280, margin: '0 auto', lineHeight: 1.5 }}>
-            Your luxury pieces are being prepared with artisanal care.
+            {t('order.confirmed.msg')}
           </p>
         </div>
 
@@ -93,7 +95,7 @@ export function OrderConfirmed() {
         >
           <div>
             <p style={{ fontSize: 10, color: '#a0b4c4', textTransform: 'uppercase', letterSpacing: '0.1em', marginBottom: 4 }}>
-              Order Reference
+              {t('order.reference')}
             </p>
             <p style={{ color: '#e0e8f0', fontWeight: 600, letterSpacing: '-0.02em' }}>#EL-{Math.floor(10000 + Math.random() * 90000)}</p>
           </div>
@@ -125,17 +127,17 @@ export function OrderConfirmed() {
         {/* Status Timeline */}
         <div className="glass-card" style={{ width: '100%', borderRadius: 24, padding: 24, marginBottom: 24 }}>
           <h3 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4', marginBottom: 24 }}>
-            Tracking Status
+            {t('order.tracking')}
           </h3>
           <div style={{ position: 'relative', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
             {/* Timeline Line */}
             <div style={{ position: 'absolute', top: 16, left: 0, width: '100%', height: 1, background: 'rgba(255,255,255,0.1)', zIndex: 0 }} />
             <div style={{ position: 'absolute', top: 16, left: 0, width: '15%', height: 1, background: '#7dd3fc', zIndex: 0 }} />
             {[
-              { label: 'Confirmed', active: true },
-              { label: 'Processing', active: false },
-              { label: 'Shipped', active: false },
-              { label: 'Delivered', active: false },
+              { label: t('order.step.confirmed'), active: true },
+              { label: t('order.step.processing'), active: false },
+              { label: t('order.step.shipped'), active: false },
+              { label: t('order.step.delivered'), active: false },
             ].map((step, i) => (
               <div key={i} style={{ position: 'relative', zIndex: 10, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 8 }}>
                 {step.active ? (
@@ -183,7 +185,7 @@ export function OrderConfirmed() {
         {items.slice(0, 1).map((item) => (
           <div key={item.id} className="glass-card" style={{ width: '100%', borderRadius: 24, padding: 24, marginBottom: 24 }}>
             <h3 style={{ fontSize: 12, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4', marginBottom: 20 }}>
-              Order Summary
+              {t('checkout.summary')}
             </h3>
             <div style={{ display: 'flex', gap: 16, marginBottom: 24 }}>
               <div
@@ -202,7 +204,7 @@ export function OrderConfirmed() {
               <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
                 <h4 style={{ fontSize: 14, fontWeight: 600, color: '#e0e8f0' }}>{item.name}</h4>
                 <p style={{ fontSize: 12, color: '#a0b4c4', marginTop: 4 }}>
-                  {item.selectedColor} • Qty {item.quantity}
+                  {item.selectedColor} • {t('product.quantity')} {item.quantity}
                 </p>
                 <p style={{ fontSize: 14, fontWeight: 700, color: '#7dd3fc', marginTop: 8 }}>
                   ₴{(item.price * item.quantity).toLocaleString()}
@@ -211,17 +213,17 @@ export function OrderConfirmed() {
             </div>
             <div style={{ paddingTop: 20, borderTop: '1px solid rgba(255,255,255,0.05)' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <span style={{ fontSize: 12, color: '#a0b4c4' }}>Estimated Arrival</span>
+                <span style={{ fontSize: 12, color: '#a0b4c4' }}>{t('order.arrival')}</span>
                 <span style={{ fontSize: 12, fontWeight: 500, color: '#e0e8f0' }}>
                   {new Date(Date.now() + 3 * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} - {new Date(Date.now() + 5 * 86400000).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
                 </span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                <span style={{ fontSize: 12, color: '#a0b4c4' }}>Shipping</span>
-                <span style={{ fontSize: 12, fontWeight: 500, color: '#c8a0f0' }}>Complimentary</span>
+                <span style={{ fontSize: 12, color: '#a0b4c4' }}>{t('order.shipping.text')}</span>
+                <span style={{ fontSize: 12, fontWeight: 500, color: '#c8a0f0' }}>{t('order.complimentary')}</span>
               </div>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', paddingTop: 8 }}>
-                <span style={{ fontSize: 14, fontWeight: 700, color: '#e0e8f0' }}>Total</span>
+                <span style={{ fontSize: 14, fontWeight: 700, color: '#e0e8f0' }}>{t('order.total.text')}</span>
                 <span style={{ fontSize: 18, fontWeight: 800, color: '#7dd3fc' }}>₴{totalPrice.toFixed(2)}</span>
               </div>
             </div>
@@ -248,10 +250,10 @@ export function OrderConfirmed() {
             </div>
             <div>
               <h4 style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4', marginBottom: 4 }}>
-                Shipping Address
+                {t('order.ship.address')}
               </h4>
               <p style={{ fontSize: 14, lineHeight: 1.5, color: '#e0e8f0' }}>
-                1245 Arctic Circle,<br />North Pole, Earth
+                —
               </p>
             </div>
           </div>
@@ -273,13 +275,10 @@ export function OrderConfirmed() {
             </div>
             <div>
               <h4 style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#a0b4c4', marginBottom: 4 }}>
-                Payment Method
+                {t('order.pay.method')}
               </h4>
               <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                 <span style={{ fontSize: 14, fontWeight: 500, color: '#e0e8f0' }}>Telegram Pay</span>
-                <span style={{ fontSize: 10, color: '#a0b4c4', background: 'rgba(255,255,255,0.05)', padding: '2px 6px', borderRadius: 4, border: '1px solid rgba(255,255,255,0.1)' }}>
-                  Visa ****4242
-                </span>
               </div>
             </div>
           </div>
@@ -306,7 +305,7 @@ export function OrderConfirmed() {
             boxShadow: '0 0 20px rgba(125,211,252,0.1)',
           }}
         >
-          CONTINUE SHOPPING
+          {t('order.continue.shopping')}
           <span className="material-symbols-outlined" style={{ fontSize: 18 }}>arrow_forward</span>
         </button>
       </main>

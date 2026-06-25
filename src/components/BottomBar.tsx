@@ -1,15 +1,17 @@
 import { useNavigate, useLocation } from 'react-router-dom'
+import { useLang } from '../context/LangContext'
 
 const tabs = [
-  { icon: 'storefront', label: 'Store', path: '/' },
-  { icon: 'local_mall', label: 'Bag', path: '/cart' },
-  { icon: 'favorite', label: 'Wishlist', path: '/favorites' },
-  { icon: 'settings', label: 'Settings', path: '/settings' },
+  { icon: 'storefront', key: 'nav.store', path: '/' },
+  { icon: 'local_mall', key: 'nav.cart', path: '/cart' },
+  { icon: 'favorite', key: 'nav.favorites', path: '/favorites' },
+  { icon: 'settings', key: 'nav.settings', path: '/settings' },
 ]
 
 export function BottomBar() {
   const navigate = useNavigate()
   const location = useLocation()
+  const { t } = useLang()
 
   return (
     <nav
@@ -30,12 +32,13 @@ export function BottomBar() {
         borderRadius: '12px 12px 0 0',
       }}
     >
-      {tabs.map((t) => {
-        const active = location.pathname === t.path || (t.path === '/' && location.pathname === '/')
+      {tabs.map((tab) => {
+        const active = location.pathname === tab.path || (tab.path === '/' && location.pathname === '/')
         return (
           <button
-            key={t.path}
-            onClick={() => navigate(t.path)}
+            key={tab.path}
+            aria-label={t(tab.key)}
+            onClick={() => navigate(tab.path)}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -59,7 +62,7 @@ export function BottomBar() {
                 fontVariationSettings: active ? "'FILL' 1, 'wght' 300, 'GRAD' 0, 'opsz' 24" : "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24",
               }}
             >
-              {t.icon}
+              {tab.icon}
             </span>
           </button>
         )

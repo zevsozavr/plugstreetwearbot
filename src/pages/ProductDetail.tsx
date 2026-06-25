@@ -232,7 +232,7 @@ export function ProductDetail() {
                   {t('product.size')}
                 </h3>
                 <button style={{ fontSize: 12, color: '#7dd3fc', textDecoration: 'underline', background: 'none', border: 'none', cursor: 'pointer' }}>
-                  {t('product.size')} Guide
+                  {t('product.size.guide')}
                 </button>
               </div>
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 12 }}>
@@ -292,7 +292,7 @@ export function ProductDetail() {
           <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             <details open style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, overflow: 'hidden' }}>
               <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, cursor: 'pointer', listStyle: 'none', fontWeight: 600, fontSize: 14, color: '#e0e8f0' }}>
-                Description
+                {t('product.description')}
                 <span className="material-symbols-outlined" style={{ transition: 'transform 0.2s', color: '#a0b4c4' }}>expand_more</span>
               </summary>
               <div style={{ padding: '0 16px 16px', fontSize: 14, color: '#a0b4c4', lineHeight: 1.6 }}>
@@ -301,7 +301,7 @@ export function ProductDetail() {
             </details>
             <details style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, overflow: 'hidden' }}>
               <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, cursor: 'pointer', listStyle: 'none', fontWeight: 600, fontSize: 14, color: '#e0e8f0' }}>
-                Materials
+                {t('product.materials')}
                 <span className="material-symbols-outlined" style={{ transition: 'transform 0.2s', color: '#a0b4c4' }}>expand_more</span>
               </summary>
               <div style={{ padding: '0 16px 16px', fontSize: 14, color: '#a0b4c4' }}>
@@ -310,7 +310,7 @@ export function ProductDetail() {
             </details>
             <details style={{ background: 'rgba(15, 21, 36, 0.6)', backdropFilter: 'blur(16px)', border: '1px solid rgba(125, 211, 252, 0.1)', borderRadius: 24, overflow: 'hidden' }}>
               <summary style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: 16, cursor: 'pointer', listStyle: 'none', fontWeight: 600, fontSize: 14, color: '#e0e8f0' }}>
-                Care Instructions
+                {t('product.care')}
                 <span className="material-symbols-outlined" style={{ transition: 'transform 0.2s', color: '#a0b4c4' }}>expand_more</span>
               </summary>
               <div style={{ padding: '0 16px 16px', fontSize: 14, color: '#a0b4c4' }}>
@@ -324,11 +324,11 @@ export function ProductDetail() {
         <section style={{ marginTop: 48, marginBottom: 80 }}>
           <div style={{ padding: '0 24px', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 24 }}>
             <div>
-              <h2 style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: '#e0e8f0' }}>THE ECOSYSTEM</h2>
-              <p style={{ fontSize: 12, color: '#c8a0f0', letterSpacing: '0.1em', textTransform: 'uppercase' }}>Complete the kit</p>
+              <h2 style={{ fontSize: 20, fontWeight: 700, letterSpacing: '-0.02em', color: '#e0e8f0' }}>{t('product.ecosystem')}</h2>
+              <p style={{ fontSize: 12, color: '#c8a0f0', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{t('product.complete')}</p>
             </div>
             <button onClick={() => navigate('/products')} style={{ fontSize: 14, color: '#7dd3fc', fontWeight: 500, background: 'none', border: 'none', cursor: 'pointer' }}>
-              See all
+              {t('product.see.all')}
             </button>
           </div>
           <div style={{ display: 'flex', overflowX: 'auto', gap: 16, padding: '0 24px' }} className="hide-scrollbar">
@@ -457,7 +457,7 @@ export function ProductDetail() {
             className="glow-hover"
           >
             <span className="material-symbols-outlined" style={{ fontVariationSettings: "'FILL' 1" }}>local_mall</span>
-            Add to Bag
+            {t('product.add')}
           </button>
         </div>
       </div>
