@@ -41,9 +41,9 @@ export function Products() {
       <header style={{
         position: 'fixed', top: 0, width: '100%', zIndex: 60,
         background: 'rgba(15,21,36,0.4)', backdropFilter: 'blur(24px)',
-        borderBottom: '1px solid rgba(125,211,252,0.1)',
+        borderBottom: '1px solid rgba(255,255,255,0.1)',
         display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-        padding: '0 20px', height: 64,
+        padding: '0 24px', height: 64,
       }}>
         <button onClick={() => navigate(-1)} style={{ color: 'var(--primary)' }} className="active:scale-90">
           <span className="material-symbols-outlined" style={{ fontSize: 28 }}>arrow_back</span>
@@ -52,8 +52,8 @@ export function Products() {
         <div style={{ width: 40 }} />
       </header>
 
-      <main style={{ paddingTop: 80, paddingLeft: 20, paddingRight: 20 }}>
-        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', marginBottom: 24, scrollbarWidth: 'none', msOverflowStyle: 'none', paddingBottom: 4 }}>
+      <main style={{ paddingTop: 80, paddingLeft: 24, paddingRight: 24 }}>
+        <div style={{ display: 'flex', gap: 12, overflowX: 'auto', marginBottom: 24, paddingBottom: 4 }} className="hide-scrollbar">
           {categories.map((cat) => {
             const active = activeCategory === cat.name || (!activeCategory && cat.name === 'All');
             return (
@@ -63,13 +63,13 @@ export function Products() {
               }}
                 style={{
                   flexShrink: 0, padding: '10px 24px', borderRadius: 9999,
-                  background: active ? 'var(--primary)' : 'rgba(15,21,36,0.6)',
+                  background: active ? 'var(--primary)' : undefined,
                   color: active ? 'var(--on-primary)' : 'var(--on-surface-variant)',
                   fontSize: 12, fontWeight: 600, whiteSpace: 'nowrap',
-                  border: active ? 'none' : '1px solid rgba(125,211,252,0.1)',
-                  backdropFilter: active ? 'none' : 'blur(16px)',
                   boxShadow: active ? '0 0 15px rgba(123,209,250,0.3)' : 'none',
-                }}>
+                  border: active ? 'none' : undefined,
+                }}
+                className={active ? '' : 'glass-card'}>
                 {t('categories.' + cat.name)}
               </button>
             );
@@ -85,19 +85,16 @@ export function Products() {
               {currentSortLabel}
             </button>
             {showSort && (
-              <div style={{
+              <div className="glass-elevated" style={{
                 position: 'absolute', top: '100%', right: 0, zIndex: 50,
-                background: 'rgba(15,21,36,0.75)', backdropFilter: 'blur(24px)',
-                border: '1px solid rgba(125,211,252,0.15)', borderRadius: 12,
-                padding: 8, minWidth: 200,
+                borderRadius: 12, padding: 8, minWidth: 200,
               }}>
                 {sortOptions.map((opt) => (
                   <button key={opt.key} onClick={() => { setSort(opt.key); setShowSort(false); }}
                     style={{
                       display: 'block', width: '100%', textAlign: 'left', padding: '10px 12px',
                       borderRadius: 12, background: sort === opt.key ? 'rgba(125,211,252,0.08)' : 'transparent',
-                      font: 'var(--font-body)', color: sort === opt.key ? 'var(--primary)' : 'var(--on-surface)',
-                      border: 'none', fontSize: 14,
+                      fontSize: 14, color: sort === opt.key ? 'var(--primary)' : 'var(--on-surface)',
                     }}>
                     {opt.label}
                   </button>
@@ -112,20 +109,9 @@ export function Products() {
             <div key={p.id} onClick={() => navigate(`/product/${p.id}`)}
               style={{ cursor: 'pointer', marginTop: i % 2 === 1 ? 24 : 0 }}>
               <div style={{
-                position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: 12, overflow: 'hidden',
-                background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
-                border: '1px solid rgba(125,211,252,0.08)',
-              }}>
-                <img src={p.image} alt={p.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-                <div style={{
-                  position: 'absolute', top: 12, right: 12,
-                  background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
-                  border: '1px solid rgba(125,211,252,0.1)', width: 32, height: 32,
-                  borderRadius: '50%', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                  color: 'rgba(255,255,255,0.8)',
-                }}>
-                  <span className="material-symbols-outlined" style={{ fontSize: 14 }}>favorite</span>
-                </div>
+                position: 'relative', width: '100%', aspectRatio: '4/5', borderRadius: 16, overflow: 'hidden',
+              }} className="glass-card">
+                <img src={p.image} alt={p.name} loading="lazy" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div style={{ padding: '8px 4px' }}>
                 <p style={{ fontSize: 11, fontWeight: 500, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>{t('categories.' + p.category)}</p>

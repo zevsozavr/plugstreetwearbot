@@ -7,7 +7,7 @@ const tabs = [
   { label: 'Catalog', path: '/products', icon: 'grid_view' },
   { label: 'Wishlist', path: '/favorites', icon: 'favorite' },
   { label: 'Cart', path: '/cart', icon: 'local_mall' },
-  { label: 'Profile', path: '/settings', icon: 'person' },
+  { label: 'Profile', path: '/settings', icon: 'settings' },
 ];
 
 export function BottomBar() {
@@ -20,13 +20,13 @@ export function BottomBar() {
     <nav style={{
       position: 'fixed', bottom: 0, left: 0, width: '100%', zIndex: 50,
       display: 'flex', justifyContent: 'space-around', alignItems: 'center',
-      padding: '8px 32px', paddingBottom: 'calc(32px + env(safe-area-inset-bottom, 0px))',
+      padding: '8px 32px', paddingBottom: 'calc(24px + env(safe-area-inset-bottom, 0px))',
       background: 'rgba(20,28,46,0.3)', backdropFilter: 'blur(32px)',
-      borderTop: '1px solid rgba(125,211,252,0.1)',
+      borderTop: '1px solid rgba(255,255,255,0.1)',
       borderTopLeftRadius: 12, borderTopRightRadius: 12,
     }}>
       {tabs.map((tab) => {
-        const active = location.pathname === tab.path || 
+        const active = location.pathname === tab.path ||
           (tab.path === '/products' && location.pathname.startsWith('/product'));
         const isCart = tab.icon === 'local_mall';
         return (
@@ -43,7 +43,7 @@ export function BottomBar() {
             }} className="active:scale-90">
               <span className="material-symbols-outlined" style={{
                 fontSize: 24,
-                fontVariationSettings: active ? "'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24" : "'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24",
+                fontVariationSettings: active ? "'FILL' 1, 'wght' 400" : "'FILL' 0, 'wght' 300",
               }}>
                 {tab.icon}
               </span>

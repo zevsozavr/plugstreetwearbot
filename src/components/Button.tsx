@@ -8,9 +8,10 @@ interface Props extends ButtonHTMLAttributes<HTMLButtonElement> {
 
 export function Button({ variant = 'primary', fullWidth, glow, style, children, ...props }: Props) {
   const base: React.CSSProperties = {
-    font: 'var(--font-label-lg)',
-    letterSpacing: '0.05em',
+    fontWeight: 600,
+    fontSize: 13,
     textTransform: 'uppercase',
+    letterSpacing: '0.05em',
     padding: '14px 24px',
     borderRadius: 12,
     transition: 'all 0.2s',
@@ -18,28 +19,30 @@ export function Button({ variant = 'primary', fullWidth, glow, style, children, 
     alignItems: 'center',
     justifyContent: 'center',
     gap: 8,
+    border: 'none',
   };
 
   const variants: Record<string, React.CSSProperties> = {
     primary: {
       background: 'var(--primary)',
       color: 'var(--on-primary)',
-      ...(glow ? { boxShadow: '0 0 30px rgba(125,211,252,0.05)' } : {}),
+      ...(glow ? { boxShadow: '0 0 20px rgba(125,211,252,0.2)' } : {}),
     },
     glass: {
-      background: 'rgba(15,21,36,0.6)',
-      color: 'var(--on-surface)',
-      border: '1px solid rgba(125,211,252,0.1)',
-      backdropFilter: 'blur(16px)',
+      background: 'rgba(125, 211, 252, 0.1)',
+      color: 'var(--primary)',
+      border: '1px solid rgba(125, 211, 252, 0.3)',
     },
     ghost: {
       background: 'transparent',
       color: 'var(--on-surface-variant)',
+      border: '1px solid rgba(255,255,255,0.1)',
     },
   };
 
   return (
     <button
+      className="active:scale-95"
       style={{ ...base, ...variants[variant], ...(fullWidth ? { width: '100%' } : {}), ...style }}
       {...props}
     >

@@ -36,37 +36,37 @@ export function Checkout() {
   return (
     <div style={{ background: 'var(--bg)', minHeight: '100vh', overflowX: 'hidden' }}>
       <Header showBack title={t('cart.checkout')} />
-      <main style={{ padding: '24px 20px', paddingBottom: 32 }}>
+      <main style={{ paddingTop: 88, padding: '24px 20px', paddingBottom: 32 }}>
         <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
           <div>
             <label style={{ fontSize: 11, fontWeight: 600, display: 'block', marginBottom: 6, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{t('checkout.name')}</label>
             <input required value={name} onChange={(e) => setName(e.target.value)} placeholder={t('checkout.placeholder.name')}
-              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid rgba(125,211,252,0.1)', background: 'rgba(15,21,36,0.6)', fontSize: 14, color: 'var(--on-surface)', backdropFilter: 'blur(8px)' }} />
+              className="glass-card"
+              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, fontSize: 14, color: 'var(--on-surface)' }} />
           </div>
           <div>
             <label style={{ fontSize: 11, fontWeight: 600, display: 'block', marginBottom: 6, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{t('checkout.phone')}</label>
             <input required value={phone} onChange={(e) => setPhone(e.target.value)} placeholder={t('checkout.placeholder.phone')}
-              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid rgba(125,211,252,0.1)', background: 'rgba(15,21,36,0.6)', fontSize: 14, color: 'var(--on-surface)', backdropFilter: 'blur(8px)' }} />
+              className="glass-card"
+              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, fontSize: 14, color: 'var(--on-surface)' }} />
           </div>
           <div>
             <label style={{ fontSize: 11, fontWeight: 600, display: 'block', marginBottom: 6, color: 'var(--on-surface-variant)', textTransform: 'uppercase', letterSpacing: '0.1em' }}>{t('checkout.address')}</label>
             <input required value={address} onChange={(e) => setAddress(e.target.value)} placeholder={t('checkout.placeholder.address')}
-              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, border: '1px solid rgba(125,211,252,0.1)', background: 'rgba(15,21,36,0.6)', fontSize: 14, color: 'var(--on-surface)', backdropFilter: 'blur(8px)' }} />
+              className="glass-card"
+              style={{ width: '100%', padding: '14px 16px', borderRadius: 12, fontSize: 14, color: 'var(--on-surface)' }} />
           </div>
 
-          <div style={{
-            background: 'rgba(15,21,36,0.6)', backdropFilter: 'blur(16px)',
-            border: '1px solid rgba(125,211,252,0.1)', borderRadius: 12, padding: 16,
-          }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontSize: 14 }}>{t('checkout.items')} ({totalItems})</span>
+          <div className="glass-elevated" style={{ borderRadius: 16, padding: 24, display: 'flex', flexDirection: 'column', gap: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: 14, color: 'var(--on-surface-variant)' }}>{t('checkout.items')} ({totalItems})</span>
               <span style={{ fontSize: 14 }}>{totalPrice.toLocaleString()}₴</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 8 }}>
-              <span style={{ fontSize: 14 }}>{t('checkout.delivery')}</span>
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <span style={{ fontSize: 14, color: 'var(--on-surface-variant)' }}>{t('checkout.delivery')}</span>
               <span style={{ color: 'var(--primary)', fontSize: 14 }}>{t('checkout.free')}</span>
             </div>
-            <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(125,211,252,0.1)', paddingTop: 12 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid rgba(255,255,255,0.1)', paddingTop: 12 }}>
               <span style={{ fontSize: 16, fontWeight: 700 }}>{t('checkout.total')}</span>
               <span style={{ fontSize: 16, fontWeight: 700, color: 'var(--primary)' }}>{totalPrice.toLocaleString()}₴</span>
             </div>
