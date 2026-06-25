@@ -12,10 +12,10 @@ export function ProductCard({ product, onClick }: Props) {
     <article onClick={onClick} style={{ cursor: 'pointer', display: 'flex', flexDirection: 'column', gap: 'var(--space-md)' }}>
       <div style={{
         position: 'relative', height: 320, borderRadius: 'var(--rounded-2xl)',
-        overflow: 'hidden', background: 'rgba(255,255,255,0.04)',
-        backdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.08)',
+        overflow: 'hidden', background: 'var(--glass-bg)',
+        backdropFilter: 'blur(12px)', border: '1px solid var(--glass-border)',
       }}>
-        <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 10, padding: '4px 10px', borderRadius: 'var(--radius-full)', background: 'rgba(19,19,19,0.8)', backdropFilter: 'blur(8px)', border: '1px solid rgba(255,255,255,0.08)', font: 'var(--font-label)', fontSize: 11, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+        <div style={{ position: 'absolute', top: 12, left: 12, zIndex: 10, padding: '4px 10px', borderRadius: 'var(--radius-full)', background: 'var(--glass-bg)', backdropFilter: 'blur(8px)', border: '1px solid var(--glass-border)', font: 'var(--font-label)', fontSize: 11, color: 'var(--primary)', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
           {t('product.condition.' + product.condition.toLowerCase().replace(/\s+/g, '_'))}
         </div>
         <img src={product.image} alt={product.name} loading="lazy"

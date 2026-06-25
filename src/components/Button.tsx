@@ -24,12 +24,12 @@ export function Button({ variant = 'primary', fullWidth, glow, style, children, 
     primary: {
       background: 'var(--primary)',
       color: 'var(--on-primary)',
-      ...(glow ? { boxShadow: '0 0 20px rgba(243,235,227,0.15)' } : {}),
+      ...(glow ? { boxShadow: 'var(--glass-glow)' } : {}),
     },
     glass: {
-      background: 'rgba(255,255,255,0.08)',
+      background: 'var(--glass-bg)',
       color: 'var(--on-surface)',
-      border: '1px solid rgba(255,255,255,0.1)',
+      border: '1px solid var(--glass-border)',
       backdropFilter: 'blur(8px)',
     },
     ghost: {

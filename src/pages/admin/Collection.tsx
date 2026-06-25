@@ -48,7 +48,7 @@ export function AdminCollection() {
 
           <div onClick={() => setEnabled(!enabled)} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '12px 16px', borderRadius: 'var(--rounded-md)', border: '1px solid var(--glass-border)', background: 'var(--glass-bg)', backdropFilter: 'blur(8px)', cursor: 'pointer' }}>
             <span style={{ font: 'var(--font-body)', color: 'var(--on-surface)' }}>{t('admin.collection.show')}</span>
-            <div style={{ width: 44, height: 24, borderRadius: 12, background: enabled ? 'var(--primary)' : 'rgba(255,255,255,0.15)', position: 'relative', transition: 'background 0.2s' }}>
+            <div style={{ width: 44, height: 24, borderRadius: 12, background: enabled ? 'var(--primary)' : 'var(--surface-highest)', position: 'relative', transition: 'background 0.2s' }}>
               <div style={{ width: 20, height: 20, borderRadius: '50%', background: '#fff', position: 'absolute', top: 2, left: enabled ? 22 : 2, transition: 'left 0.2s' }} />
             </div>
           </div>

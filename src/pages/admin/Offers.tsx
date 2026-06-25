@@ -64,8 +64,8 @@ export function AdminOffers() {
               <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
                 <button onClick={() => toggleOffer(o.id)} style={{
                   padding: '6px 12px', borderRadius: 'var(--radius-full)', cursor: 'pointer', fontSize: 11, fontWeight: 600,
-                  background: o.active ? 'rgba(243,235,227,0.12)' : 'rgba(255,180,171,0.2)',
-                  border: `1px solid ${o.active ? 'rgba(243,235,227,0.2)' : 'rgba(255,180,171,0.3)'}`,
+                  background: o.active ? 'var(--primary-container)' : 'rgba(255,180,171,0.2)',
+                  border: `1px solid ${o.active ? 'rgba(125,211,252,0.3)' : 'rgba(255,180,171,0.3)'}`,
                   color: o.active ? 'var(--primary)' : 'var(--error)', textTransform: 'uppercase', letterSpacing: '0.05em',
                 }}>
                   {o.active ? t('admin.offer.active') : t('admin.offer.inactive')}

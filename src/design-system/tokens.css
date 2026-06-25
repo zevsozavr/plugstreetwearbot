@@ -1,46 +1,51 @@
 :root {
-  --bg: #131313;
-  --surface: #20201f;
-  --surface-low: #1a1a1a;
-  --surface-container: #20201f;
-  --surface-high: #2a2a29;
-  --surface-highest: #333332;
-  --on-surface: #e5e2e1;
-  --on-surface-variant: #cdc5bc;
-  --primary: #f3ebe3;
-  --primary-dim: #e0d5ca;
-  --primary-container: #483c31;
-  --on-primary: #1f1b16;
-  --on-primary-container: #f3ebe3;
-  --secondary: #c2c9b4;
-  --secondary-dim: #a4ad94;
-  --outline: #958e86;
-  --outline-variant: #49433d;
-  --error: #ffb4ab;
-  --error-container: #93000a;
-  --on-error: #690005;
+  --bg: #0a0e1a;
+  --surface: #0f1524;
+  --surface-dim: #0f1524;
+  --surface-low: #111828;
+  --surface-container: #141c2e;
+  --surface-container-low: #111828;
+  --surface-high: #1a2438;
+  --surface-highest: #202c42;
+  --surface-bright: #1a2438;
+  --on-surface: #e0e8f0;
+  --on-surface-variant: #a0b4c4;
+  --primary: #7dd3fc;
+  --primary-dim: #5ab8e8;
+  --primary-container: #0e4d6e;
+  --on-primary: #001f2e;
+  --on-primary-container: #c8eaff;
+  --secondary: #88b4cc;
+  --secondary-dim: #6a95af;
+  --outline: #4a6070;
+  --outline-variant: #2a3a48;
+  --error: #ff6b6b;
+  --error-container: #3d1414;
+  --on-error: #1a0000;
 
-  --glass-bg: rgba(32,32,31,0.4);
-  --glass-border: rgba(255,255,255,0.08);
-  --glass-card-bg: rgba(32,32,31,0.6);
-  --glass-card-border: rgba(255,255,255,0.1);
+  --glass-bg: rgba(15, 21, 36, 0.6);
+  --glass-border: rgba(125, 211, 252, 0.1);
+  --glass-card-bg: rgba(15, 21, 36, 0.75);
+  --glass-card-border: rgba(125, 211, 252, 0.08);
+  --glass-glow: 0 0 30px rgba(125, 211, 252, 0.05);
 
-  --font-display: 700 32px/40px 'Hanken Grotesk', sans-serif;
-  --font-headline: 600 24px/32px 'Hanken Grotesk', sans-serif;
-  --font-headline-sm: 600 20px/28px 'Hanken Grotesk', sans-serif;
-  --font-body: 400 16px/24px 'Hanken Grotesk', sans-serif;
-  --font-body-sm: 400 14px/20px 'Hanken Grotesk', sans-serif;
-  --font-label: 500 12px/16px 'Hanken Grotesk', sans-serif;
-  --font-label-lg: 600 14px/16px 'Hanken Grotesk', sans-serif;
+  --font-display: 700 40px/48px 'Inter', sans-serif;
+  --font-display-desktop: 700 64px/72px 'Inter', sans-serif;
+  --font-headline: 600 24px/32px 'Inter', sans-serif;
+  --font-headline-sm: 500 18px/28px 'Inter', sans-serif;
+  --font-body: 400 16px/24px 'Inter', sans-serif;
+  --font-body-sm: 400 14px/20px 'Inter', sans-serif;
+  --font-label: 600 12px/16px 'Inter', sans-serif;
+  --font-label-lg: 600 14px/16px 'Inter', sans-serif;
 
   --ls-display: -0.02em;
   --ls-headline: -0.01em;
   --ls-label: 0.05em;
 
-  --rounded: 6px;
-  --rounded-md: 10px;
-  --rounded-lg: 14px;
-  --rounded-xl: 18px;
+  --rounded: 4px;
+  --rounded-md: 8px;
+  --rounded-lg: 12px;
+  --rounded-xl: 16px;
   --rounded-2xl: 24px;
   --radius-full: 9999px;
 
@@ -51,17 +56,28 @@
   --space-lg: 24px;
   --space-xl: 40px;
 
-  --pad: 24px;
+  --pad: 20px;
+  --pad-desktop: 64px;
   --gutter: 16px;
+  --container-max: 1280px;
   --safe-bottom: 32px;
 }
 
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%;overflow-x:hidden;-webkit-font-smoothing:antialiased}
-body{font:var(--font-body);color:var(--on-surface);background:var(--bg)}
+body{font:var(--font-body);color:var(--on-surface);background:var(--bg);font-family:'Inter',sans-serif}
 #root{min-height:100%;display:flex;flex-direction:column}
 img{max-width:100%;display:block}
 button{cursor:pointer;border:none;background:none;font:inherit;color:inherit}
 a{text-decoration:none;color:inherit}
 input{font:inherit;color:inherit;border:none;outline:none}
 ::-webkit-scrollbar{width:0;height:0}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.tonal-gradient {
+  background: linear-gradient(180deg, rgba(10,14,26,0) 0%, rgba(10,14,26,1) 100%);
+}

@@ -164,7 +164,7 @@ export function AdminProducts() {
                 <p style={{ font: 'var(--font-body)', fontWeight: 600 }}>{p.name}</p>
                 <p style={{ font: 'var(--font-label)', color: 'var(--on-surface-variant)', fontSize: 12 }}>
                   {t('categories.' + p.category)} — {p.price.toLocaleString()}₴
-                  <span style={{ marginLeft: 8, padding: '1px 6px', borderRadius: 'var(--radius-full)', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)' }}>{t('product.condition.' + p.condition.toLowerCase().replace(/\s+/g, '_'))}</span>
+                  <span style={{ marginLeft: 8, padding: '1px 6px', borderRadius: 'var(--radius-full)', background: 'var(--glass-bg)', border: '1px solid var(--glass-border)' }}>{t('product.condition.' + p.condition.toLowerCase().replace(/\s+/g, '_'))}</span>
                 </p>
                 {p.description && <p style={{ font: 'var(--font-body)', fontSize: 12, color: 'var(--on-surface-variant)', marginTop: 4, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', maxWidth: 200 }}>{p.description}</p>}
               </div>

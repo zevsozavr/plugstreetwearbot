@@ -14,8 +14,8 @@ export function Header({ title, showBack, right, onBack }: Props) {
     <header style={{
       display: 'flex', alignItems: 'center', justifyContent: 'space-between',
       padding: '12px var(--pad)', height: 64, position: 'sticky', top: 0, zIndex: 60,
-      background: 'rgba(32,32,31,0.4)', backdropFilter: 'blur(24px)',
-      borderBottom: '1px solid rgba(255,255,255,0.06)',
+      background: 'var(--glass-bg)', backdropFilter: 'blur(24px)',
+      borderBottom: '1px solid var(--glass-border)',
     }}>
       <div style={{ width: 40, display: 'flex', alignItems: 'center' }}>
         {showBack && (

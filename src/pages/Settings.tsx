@@ -40,8 +40,8 @@ export function Settings() {
               <button key={l} onClick={() => setLang(l)}
                 style={{
                   width: '100%', display: 'flex', alignItems: 'center', justifyContent: 'space-between',
-                  padding: 16, cursor: 'pointer', background: lang === l ? 'rgba(243,235,227,0.08)' : 'transparent',
-                  border: 'none', color: 'var(--on-surface)', borderBottom: '1px solid rgba(255,255,255,0.05)',
+                    padding: 16, cursor: 'pointer', background: lang === l ? 'var(--primary-container)' : 'transparent',
+                    border: 'none', color: 'var(--on-surface)', borderBottom: '1px solid var(--glass-border)',
                 }}>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                   <Icon name={lang === l ? 'radio_button_checked' : 'radio_button_unchecked'} style={{ color: lang === l ? 'var(--primary)' : 'var(--on-surface-variant)' }} />
