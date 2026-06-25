@@ -4,7 +4,7 @@ import { BottomBar } from '../components/BottomBar';
 import { useCart } from '../context/CartContext';
 import { useData } from '../context/DataContext';
 import { useLang } from '../context/LangContext';
-import { Glass } from '../components/Glass';
+
 
 export function Storefront() {
   const navigate = useNavigate();
