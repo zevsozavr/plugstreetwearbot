@@ -54,7 +54,7 @@ export function Checkout() {
   }
 
   return (
-    <div style={{ background: '#0a0e1a', minHeight: '100vh' }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh' }}>
       {/* Top App Bar */}
       <header
         style={{

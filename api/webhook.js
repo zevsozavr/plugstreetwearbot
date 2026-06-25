@@ -3,6 +3,12 @@ const BOT_TOKEN = process.env.BOT_TOKEN || '8649366560:AAE_Resk8hYpJUFKaLguojKkg
 // Simple in-memory user lang store (note: resets on Vercel cold start)
 let userLangs = {};
 
+function t(lang) {
+  if (lang === 'lang_ua') return { welcome: 'Ласкаво просимо!', btn: 'Відкрити' }
+  if (lang === 'lang_ru') return { welcome: 'Добро пожаловать!', btn: 'Открыть' }
+  return { welcome: 'Welcome', btn: 'Open' }
+}
+
 async function tgSend(params) {
   return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
     method: 'POST',
@@ -40,12 +46,13 @@ export default async function handler(req, res) {
       userLangs[chatId] = data;
     }
 
+    const texts = t(userLangs[chatId]);
     await tgSend({
       chat_id: chatId,
-      text: 'Welcome',
+      text: texts.welcome,
       reply_markup: {
         inline_keyboard: [[
-          { text: 'Open', web_app: { url: webAppUrl } }
+          { text: texts.btn, web_app: { url: webAppUrl } }
         ]]
       }
     });
@@ -71,12 +78,13 @@ export default async function handler(req, res) {
         }
       });
     } else {
+      const texts = t(userLangs[chatId]);
       await tgSend({
         chat_id: chatId,
-        text: 'Welcome',
+        text: texts.welcome,
         reply_markup: {
           inline_keyboard: [[
-            { text: 'Open', web_app: { url: webAppUrl } }
+            { text: texts.btn, web_app: { url: webAppUrl } }
           ]]
         }
       });

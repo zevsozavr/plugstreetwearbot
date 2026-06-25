@@ -14,7 +14,7 @@ export function Storefront() {
   const masonry = products
 
   return (
-    <div style={{ background: '#0a0e1a', minHeight: '100vh', paddingBottom: 128 }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 128 }}>
       <Header left={<div style={{ width: 28 }} />} />
 
       <main style={{ paddingTop: 64 }}>

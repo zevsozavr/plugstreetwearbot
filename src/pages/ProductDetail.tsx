@@ -37,7 +37,7 @@ export function ProductDetail() {
 
   if (!product) {
     return (
-      <div style={{ background: '#0a0e1a', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
+      <div style={{ background: 'var(--bg)', minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: 24 }}>
         <p style={{ color: '#a0b4c4' }}>Product not found</p>
       </div>
     )
@@ -48,7 +48,7 @@ export function ProductDetail() {
   const related = products.filter((p) => p.id !== product.id).slice(0, 3)
 
   return (
-    <div style={{ background: '#0a0e1a', minHeight: '100vh', paddingBottom: 140 }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 140 }}>
       {/* Top Navigation */}
       <header
         style={{

@@ -56,6 +56,12 @@ async function tgSend(params) {
   });
 }
 
+function t(lang) {
+  if (lang === 'lang_ua') return { welcome: 'Ласкаво просимо!', btn: 'Відкрити' }
+  if (lang === 'lang_ru') return { welcome: 'Добро пожаловать!', btn: 'Открыть' }
+  return { welcome: 'Welcome', btn: 'Open' }
+}
+
 async function tgAnswerCb(id) {
   return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
     method: 'POST',
@@ -78,12 +84,13 @@ app.post('/api/webhook', async (req, res) => {
       saveUserLangs();
     }
 
+    const texts = t(userLangs[chatId]);
     await tgSend({
       chat_id: chatId,
-      text: 'Welcome',
+      text: texts.welcome,
       reply_markup: {
         inline_keyboard: [[
-          { text: 'Open', web_app: { url: publicUrl } }
+          { text: texts.btn, web_app: { url: publicUrl } }
         ]]
       }
     });
@@ -109,12 +116,13 @@ app.post('/api/webhook', async (req, res) => {
         }
       });
     } else {
+      const texts = t(userLangs[chatId]);
       await tgSend({
         chat_id: chatId,
-        text: 'Welcome',
+        text: texts.welcome,
         reply_markup: {
           inline_keyboard: [[
-            { text: 'Open', web_app: { url: publicUrl } }
+            { text: texts.btn, web_app: { url: publicUrl } }
           ]]
         }
       });

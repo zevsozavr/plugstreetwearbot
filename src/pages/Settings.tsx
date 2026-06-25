@@ -1,7 +1,7 @@
-import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import { useLang } from '../context/LangContext'
+import { useTheme } from '../context/ThemeContext'
 
 import { BottomBar } from '../components/BottomBar'
 
@@ -9,7 +9,7 @@ export function Settings() {
   const navigate = useNavigate()
   const { isAdmin } = useAuth()
   const { lang, setLang } = useLang()
-  const [darkMode, setDarkMode] = useState(true)
+  const { darkMode, toggleDarkMode } = useTheme()
 
   const sectionStyle: React.CSSProperties = {
     background: 'rgba(15, 21, 36, 0.6)',
@@ -33,7 +33,7 @@ export function Settings() {
   }
 
   return (
-    <div style={{ background: '#0a0e1a', minHeight: '100vh', maxWidth: 390, margin: '0 auto', overflowX: 'hidden', paddingBottom: 128 }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', maxWidth: 390, margin: '0 auto', overflowX: 'hidden', paddingBottom: 128 }}>
       {/* Top App Bar */}
       <header
         style={{
@@ -109,7 +109,7 @@ export function Settings() {
                 <span style={{ fontWeight: 500, color: '#e0e8f0' }}>Dark Mode</span>
               </div>
               <div
-                onClick={() => setDarkMode(!darkMode)}
+                onClick={toggleDarkMode}
                 style={{
                   width: 48,
                   height: 24,

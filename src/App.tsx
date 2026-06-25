@@ -4,6 +4,7 @@ import { FavoritesProvider } from './context/FavoritesContext';
 import { AuthProvider } from './context/AuthContext';
 import { DataProvider } from './context/DataContext';
 import { LangProvider } from './context/LangContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { Storefront } from './pages/Storefront';
 import { ProductDetail } from './pages/ProductDetail';
 import { Cart } from './pages/Cart';
@@ -21,6 +22,7 @@ import { AdminCollection } from './pages/admin/Collection';
 export default function App() {
   return (
     <BrowserRouter>
+      <ThemeProvider>
       <AuthProvider>
         <DataProvider>
           <CartProvider>
@@ -42,10 +44,11 @@ export default function App() {
                 <Route path="/admin/collection" element={<AdminCollection />} />
               </Routes>
             </LangProvider>
-            </FavoritesProvider>
-          </CartProvider>
-        </DataProvider>
+          </FavoritesProvider>
+        </CartProvider>
+      </DataProvider>
       </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   );
 }

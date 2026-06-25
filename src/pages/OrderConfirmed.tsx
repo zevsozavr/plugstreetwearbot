@@ -7,7 +7,7 @@ export function OrderConfirmed() {
   const { items, totalPrice } = useCart()
 
   return (
-    <div style={{ background: '#0a0e1a', minHeight: '100vh', paddingBottom: 128 }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 128 }}>
       {/* Top App Bar */}
       <header
         style={{

@@ -16,7 +16,7 @@ export function Cart() {
   const total = subtotal * (1 - discount)
 
   return (
-    <div style={{ background: '#0a0e1a', minHeight: '100vh', paddingBottom: 196 }}>
+    <div style={{ background: 'var(--bg)', minHeight: '100vh', paddingBottom: 196 }}>
       {/* Top App Bar */}
       <header
         style={{

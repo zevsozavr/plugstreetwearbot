@@ -56,6 +56,12 @@ async function tgSend(params) {
   });
 }
 
+function t(lang) {
+  if (lang === 'ua') return { welcome: 'Ласкаво просимо!', btn: 'Відкрити' }
+  if (lang === 'ru') return { welcome: 'Добро пожаловать!', btn: 'Открыть' }
+  return { welcome: 'Welcome', btn: 'Open' }
+}
+
 async function tgAnswerCb(id) {
   return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
     method: 'POST',
