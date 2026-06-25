@@ -52,9 +52,9 @@ export function Settings() {
           height: 64,
         }}
       >
-        <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }}>menu</span>
+        <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }} onClick={() => navigate(-1)}>arrow_back</span>
         <h1 style={{ fontFamily: 'Inter', fontSize: 24, fontWeight: 800, letterSpacing: '-0.03em', color: '#7dd3fc' }}>ELITE</h1>
-        <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }}>shopping_bag</span>
+        <span className="material-symbols-outlined" style={{ color: '#7dd3fc', cursor: 'pointer' }} onClick={() => navigate('/cart')}>shopping_bag</span>
       </header>
 
       <main style={{ paddingTop: 96, paddingLeft: 24, paddingRight: 24 }}>
@@ -109,41 +109,7 @@ export function Settings() {
           </div>
         </section>
 
-        {/* Account Management */}
-        <section style={{ marginBottom: 24 }}>
-          <h3 style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: '#7dd3fc', opacity: 0.7, padding: '0 4px', marginBottom: 12 }}>
-            Account Management
-          </h3>
-          <div style={sectionStyle}>
-            {[
-              { icon: 'notifications', label: 'Notifications' },
-              { icon: 'local_shipping', label: 'Shipping Addresses' },
-              { icon: 'payments', label: 'Payment Methods' },
-              { icon: 'lock_open', label: 'Password' },
-            ].map((item, i) => (
-              <div key={item.label} style={{ ...rowStyle, ...(i < 3 ? rowBorder : {}) }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
-                  <div
-                    style={{
-                      width: 40,
-                      height: 40,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 24,
-                      background: 'rgba(125, 211, 252, 0.1)',
-                      color: '#7dd3fc',
-                    }}
-                  >
-                    <span className="material-symbols-outlined">{item.icon}</span>
-                  </div>
-                  <span style={{ fontWeight: 500, color: '#e0e8f0' }}>{item.label}</span>
-                </div>
-                <span className="material-symbols-outlined" style={{ color: '#a0b4c4', fontSize: 20 }}>chevron_right</span>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         {/* Preferences */}
         <section style={{ marginBottom: 24 }}>
@@ -248,36 +214,13 @@ export function Settings() {
           </div>
         </section>
 
-        {/* Support & Legals */}
-        <section style={{ marginBottom: 24 }}>
-          <h3 style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: '0.2em', fontWeight: 700, color: '#a0b4c4', padding: '0 4px', marginBottom: 12 }}>
-            Support &amp; Legals
-          </h3>
-          <div style={sectionStyle}>
-            {[
-              { icon: 'launch', label: 'FAQ' },
-              { icon: 'mail', label: 'Contact Us' },
-              { icon: 'policy', label: 'Privacy Policy' },
-              { icon: 'description', label: 'Terms of Service' },
-            ].map((item, i) => (
-              <div key={item.label} style={{ ...rowStyle, ...(i < 3 ? rowBorder : {}) }}>
-                <span style={{ fontWeight: 500, opacity: 0.8, color: '#e0e8f0', fontSize: 14 }}>{item.label}</span>
-                <span className="material-symbols-outlined" style={{ color: '#a0b4c4', opacity: 0.5, fontSize: 20 }}>{item.icon}</span>
-              </div>
-            ))}
-          </div>
-        </section>
+
 
         {/* About */}
         <section style={{ paddingTop: 16, paddingBottom: 48, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 24 }}>
-          <div style={{ textAlign: 'center' }}>
-            <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#a0b4c4' }}>
-              Version 4.2.0-GLACIER
-            </p>
-            <p style={{ fontSize: 10, color: 'rgba(125, 211, 252, 0.4)', marginTop: 4 }}>
-              ELITE LUXURY BOUTIQUE TM
-            </p>
-          </div>
+          <p style={{ fontSize: 10, fontWeight: 700, letterSpacing: '0.1em', textTransform: 'uppercase', color: '#a0b4c4' }}>
+            Version 4.2.0-GLACIER
+          </p>
           <button
             style={{
               display: 'flex',
