@@ -1,5 +1,24 @@
 const BOT_TOKEN = process.env.BOT_TOKEN || '8649366560:AAE_Resk8hYpJUFKaLguojKkgRyH54OQbyo';
 
+// Simple in-memory user lang store (note: resets on Vercel cold start)
+let userLangs = {};
+
+async function tgSend(params) {
+  return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+}
+
+async function tgAnswerCb(id) {
+  return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ callback_query_id: id }),
+  });
+}
+
 export default async function handler(req, res) {
   if (req.method === 'GET') {
     return res.status(200).json({ ok: true, message: 'Webhook active' });
@@ -7,30 +26,61 @@ export default async function handler(req, res) {
 
   if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
 
-  const { message } = req.body;
+  const { message, callback_query } = req.body;
+  const webAppUrl = process.env.VERCEL_URL
+    ? `https://${process.env.VERCEL_URL}`
+    : 'https://plugstreetwearbot.vercel.app';
+
+  if (callback_query) {
+    const { data, from, id } = callback_query;
+    const chatId = from.id;
+    await tgAnswerCb(id);
+
+    if (data === 'lang_ua' || data === 'lang_ru') {
+      userLangs[chatId] = data;
+    }
+
+    await tgSend({
+      chat_id: chatId,
+      text: 'Welcome',
+      reply_markup: {
+        inline_keyboard: [[
+          { text: 'Open', web_app: { url: webAppUrl } }
+        ]]
+      }
+    });
+
+    return res.json({ ok: true });
+  }
+
   if (!message) return res.json({ ok: true });
 
   const chatId = message.chat.id;
   const text = message.text || '';
 
   if (text.startsWith('/start')) {
-    const webAppUrl = process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'https://plugstreetwearbot.vercel.app';
-
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    if (!userLangs[chatId]) {
+      await tgSend({
         chat_id: chatId,
-        text: '✦ Welcome to Trippie\n\nЗнаходьте найкращі образи — від щоденних до вечірніх.',
+        text: 'Welcome! Choose your language:',
+        reply_markup: {
+          inline_keyboard: [
+            [{ text: 'Українська', callback_data: 'lang_ua' }],
+            [{ text: 'Русский', callback_data: 'lang_ru' }],
+          ]
+        }
+      });
+    } else {
+      await tgSend({
+        chat_id: chatId,
+        text: 'Welcome',
         reply_markup: {
           inline_keyboard: [[
-            { text: 'Open Boutique', web_app: { url: webAppUrl } }
+            { text: 'Open', web_app: { url: webAppUrl } }
           ]]
         }
-      })
-    });
+      });
+    }
   }
 
   res.json({ ok: true });

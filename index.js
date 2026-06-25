@@ -1,6 +1,6 @@
 import express from 'express';
 import crypto from 'crypto';
-import { readFileSync, existsSync } from 'fs';
+import { readFileSync, writeFileSync, existsSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
@@ -16,6 +16,19 @@ app.use(express.json());
 
 if (existsSync(distPath)) {
   app.use(express.static(distPath));
+}
+
+const LANG_FILE = join(__dirname, 'user_langs.json');
+
+let userLangs = {};
+if (existsSync(LANG_FILE)) {
+  try {
+    userLangs = JSON.parse(readFileSync(LANG_FILE, 'utf-8'));
+  } catch {}
+}
+
+function saveUserLangs() {
+  writeFileSync(LANG_FILE, JSON.stringify(userLangs, null, 2));
 }
 
 function validateTelegramData(initData) {
@@ -35,26 +48,80 @@ function validateTelegramData(initData) {
   }
 }
 
+async function tgSend(params) {
+  return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+}
+
+async function tgAnswerCb(id) {
+  return fetch(`https://api.telegram.org/bot${BOT_TOKEN}/answerCallbackQuery`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ callback_query_id: id }),
+  });
+}
+
 app.post('/api/webhook', async (req, res) => {
-  const { message } = req.body;
+  const { message, callback_query } = req.body;
+  const publicUrl = process.env.PUBLIC_URL || `http://localhost:${PORT}`;
+
+  if (callback_query) {
+    const { data, from, id } = callback_query;
+    const chatId = from.id;
+    await tgAnswerCb(id);
+
+    if (data === 'lang_ua') {
+      userLangs[chatId] = 'ua';
+      saveUserLangs();
+    } else if (data === 'lang_ru') {
+      userLangs[chatId] = 'ru';
+      saveUserLangs();
+    }
+
+    await tgSend({
+      chat_id: chatId,
+      text: 'Welcome',
+      reply_markup: {
+        inline_keyboard: [[
+          { text: 'Open', web_app: { url: publicUrl } }
+        ]]
+      }
+    });
+
+    return res.json({ ok: true });
+  }
+
   if (!message) return res.json({ ok: true });
 
   const chatId = message.chat.id;
   const text = message.text || '';
-  const publicUrl = process.env.PUBLIC_URL || `http://localhost:${PORT}`;
 
   if (text.startsWith('/start')) {
-    await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
+    if (!userLangs[chatId]) {
+      await tgSend({
         chat_id: chatId,
-        text: '✦ Welcome to Certified Clo\n\nDiscover quiet luxury — browse our collection of handpicked essentials.',
+        text: 'Welcome! Choose your language:',
         reply_markup: {
-          inline_keyboard: [[{ text: 'Open Boutique', web_app: { url: publicUrl } }]],
-        },
-      }),
-    });
+          inline_keyboard: [
+            [{ text: 'Українська', callback_data: 'lang_ua' }],
+            [{ text: 'Русский', callback_data: 'lang_ru' }],
+          ]
+        }
+      });
+    } else {
+      await tgSend({
+        chat_id: chatId,
+        text: 'Welcome',
+        reply_markup: {
+          inline_keyboard: [[
+            { text: 'Open', web_app: { url: publicUrl } }
+          ]]
+        }
+      });
+    }
   }
 
   res.json({ ok: true });
@@ -62,6 +129,7 @@ app.post('/api/webhook', async (req, res) => {
 
 app.post('/api/order', async (req, res) => {
   const { initData, order } = req.body;
+
   if (!validateTelegramData(initData)) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
